@@ -1,0 +1,31 @@
+.logo {
+  height: $logo-height;
+  width: $logo-width;
+  max-height: $logo-height;
+  max-width: $logo-width;
+  position: relative;
+  margin-left: 10px;
+
+  .circle{
+    height: 51px;
+    width: 52px;
+    top: 4px;
+    left: 4px;
+    border: 0px solid $logo-border-color;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+    &:hover {
+      border-color: $logo-hover-color;
+    }
+  }
+  .logoImg {
+    top: 50%;
+    left: 50%;
+    max-height: $logo-img-height;
+    max-width: $logo-img-width;
+    position: absolute;
+    margin-top: -19px;
+    margin-left: -19px;
+  }
+}

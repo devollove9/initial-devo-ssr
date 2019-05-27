@@ -1,0 +1,67 @@
+.Header {
+  width:100%;
+  flex: 0 0 auto;
+  display: inline-block;
+  top: 0;
+  height: 60px;
+  position: absolute;
+  background: transparentize(#FEFEFE, 0.01);
+  box-shadow: 0px 4px 8px -3px rgba(17, 17, 17, .06);
+
+  .container {
+  }
+
+  .logo {
+    float: left;
+    display: inline-block;
+  }
+
+  @media (max-width: 680px) {
+    .menu {
+      display: none;
+    }
+    .menuIconAll {
+      display: inline-block;
+    }
+  }
+  @media (min-width: 680px) {
+    .menu {
+      display: inline-block;
+    }
+    .menuIconAll {
+      display: none;
+    }
+  }
+  .menu {
+    margin-left: 30px;
+    min-width: 460px;
+    float: left;
+  }
+  .switchLanguage {
+    float:right;
+    flex: 0 1 auto;
+    margin-left: auto;
+    margin-right:24px;
+    display: inline-block;
+    margin-top: 18px;
+    select {
+      display: inline-block;
+      float: right;
+    }
+  }
+  .menuIconAll {
+    margin-top: 12px;
+    float: right;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+
+
+
+}
+
+
+li a select {
+  text-decoration: none;
+  cursor: pointer;
+}

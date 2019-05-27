@@ -1,0 +1,11 @@
+.TextDropDown {
+  position: relative;
+  margin-left: 10px;
+  cursor: pointer;
+  .dropDownMenu{
+    &:hover {
+      color: black;
+    }
+
+  }
+}

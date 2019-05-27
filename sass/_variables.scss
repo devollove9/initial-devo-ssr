@@ -1,0 +1,74 @@
+$white:                             #ffffff;
+$black:                             #000000;
+$black-lighter:                     #222222;
+$grey:                              #fafafa;
+$gery-transparent:                  rgba(61,59,79,0.2);
+$grey-neat:                         #f2fef5;
+$grey-disable:                      #f1f0f5;
+$grey-fill:                         #aeacb5;
+$grey-light:                        #aba6b7;
+$grey-lighter:                      #c6c4cd;
+$grey-dark:                         #e9e7ef;
+$gery-dark-transparent:             rgba(61,59,79,0.9);
+$grey-darker:                       #333333;
+$blue:                              #70d9f8;
+$blue-strong:                       #3b589e;
+$blue-main:                         #62acdf;
+$blue-main-lighter:                 #93ddff;
+$blue-darker:                       #44ecf6;
+$blue-light:                        #00c6ff;
+$blue-lighter:                      #44cef6;
+$blue-grey:                         #7ba7b7;
+$yellow-dark:                       #d3b17d;
+$teal-light:                        #f0fcff;
+$green-light:                       #48c0a3;
+$blue-google:                       #4082f2;
+$blue-facebook:                     $blue-strong;
+
+
+$universal-background:              $blue-main;
+$universal-background-lighter:      $blue-main-lighter;
+$span-fill:                         $blue;
+$button-fill:                       $blue-lighter;
+$button-disabled:                   $grey-disable;
+$button-fill-darker:                $blue-darker;
+
+$input-text-color:                  $grey-darker;
+$input-border-color:                $grey-dark;
+$input-border-color-focus:          $blue;
+$input-placeholder-color:           $grey-lighter;
+$input-caret-color-focus:           $blue-lighter;
+
+$selector-border-color:             $grey-dark;
+$selector-background-color:         $white;
+$selector-background-fill-color:    $blue;
+
+$genderSelector-text:               $grey-light;
+$genderSelector-text-chosen:        $blue-light;
+
+$languageLevelSelector-level:       $grey-darker;
+$languageLevelSelector-name:        $grey-fill;
+
+$modal-warning-background:          $gery-transparent;
+$modal-warning-box-background:      $gery-dark-transparent;
+$terms-link:                        $green-light;
+
+
+
+// Fonts --------------------------
+$font-size: 16px;
+$gothamRoundedMedium:               'GothamRounded-Medium', sans-serif;
+$gothamRoundedLight:                'GothamRounded-Light', sans-serif;
+$gothamRoundedBook:                 'GothamRounded-Book', sans-serif;
+$notoSansHansBold:                  'NotoSansHans-Bold', sans-serif;
+$notoSansHansRegular:               'NotoSansHans-Regular', sans-serif;
+$notoSansHansDemiLight:             'NotoSansHans-DemiLight', sans-serif;
+
+
+// Logo
+$logo-height: 60px;
+$logo-width: 60px;
+$logo-img-height: 40px;
+$logo-img-width: 40px;
+$logo-border-color: $grey-light;
+$logo-hover-color: $grey-darker;
