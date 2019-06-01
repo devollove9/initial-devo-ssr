@@ -1,5 +1,5 @@
 <script>
-// import Header from '@/components/Header'
+import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 // import i18n from '@/libs/i18n'
 // import localeMessage from './index.i18n.js'
@@ -7,8 +7,6 @@ import Footer from '@/components/Footer'
 export default {
   name: 'NotFound',
   components: {
-    // Header,
-    Footer
   },
   beforeCreate () {
     // i18n(localeMessage)
@@ -17,9 +15,9 @@ export default {
   },
   render () {
     return (
-      <div className="NotFound">
+      <div class="NotFound">
         <Header/>
-        <div id="notfound" class="notfound">
+        <div class="container">
           <h1 class="notfound__headline">
             Looking for something?
           </h1>
@@ -37,6 +35,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  @import './index.scss'
+<style lang="scss" scoped>
+  @import './index.scss';
 </style>

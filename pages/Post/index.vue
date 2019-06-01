@@ -10,9 +10,6 @@ import localeMessage from './index.i18n.js'
 export default {
   name: 'Post',
   components: {
-    Header,
-    Footer,
-    Card
   },
   data () {
     return {
@@ -31,50 +28,52 @@ export default {
     return (
       <div class="Post">
         <Header />
-        <Card className="Card111">
-          <div class="content">
-            <div class="Title">
-              How to quickly understand java
+        <div class="container">
+          <Card className="Card111">
+            <div class="content">
+              <div class="Title">
+                How to quickly understand java
+              </div>
+            </div>
+            <div onClick={this.testAAA} class="description" style={ { color: this.textColor } }>
+              Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
+            </div>
+          </Card>
+          <div class="Card">
+            <div class="content">
+              <div class="Title">
+                How to quickly understand java
+              </div>
+            </div>
+            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
             </div>
           </div>
-          <div onClick={this.testAAA} class="description" style={ { color: this.textColor } }>
-            Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-          </div>
-        </Card>
-        <div class="Card">
-          <div class="content">
-            <div class="Title">
-              How to quickly understand java
+          <div class="Card">
+            <div class="content">
+              <div class="Title">
+                How to quickly understand java
+              </div>
+            </div>
+            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
             </div>
           </div>
-          <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-          </div>
-        </div>
-        <div class="Card">
-          <div class="content">
-            <div class="Title">
-              How to quickly understand java
+          <div class="Card">
+            <div class="content">
+              <div class="Title">
+                How to quickly understand java
+              </div>
+            </div>
+            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
             </div>
           </div>
-          <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-          </div>
-        </div>
-        <div class="Card">
-          <div class="content">
-            <div class="Title">
-              How to quickly understand java
+          <div class="Card">
+            <div class="content">
+              <div class="Title">
+                How to quickly understand java
+              </div>
             </div>
-          </div>
-          <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-          </div>
-        </div>
-        <div class="Card">
-          <div class="content">
-            <div class="Title">
-              How to quickly understand java
+            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
             </div>
-          </div>
-          <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
           </div>
         </div>
         <Footer />

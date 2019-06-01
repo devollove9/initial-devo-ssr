@@ -1,5 +1,8 @@
 /* Change Theme Color */
 // $--color-primary: rgba(248, 176, 32, 0.97);
-$--color-primary: $grey-darker;
+$--color-primary: #333333;
 /* Chane icon font，required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+
+@import '~element-ui/packages/theme-chalk/src/index';
