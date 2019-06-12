@@ -20,61 +20,61 @@ export default {
     i18n(localeMessage, this.$store)
   },
   methods: {
-    testAAA () {
+    testAAA (a) {
+      console.log(a)
       this.textColor = 'orange'
     }
   },
   render () {
+    const articles = [
+      {
+        articleId: '1',
+        title: 'How to quickly understand java',
+        authorName: 'Yaxing Li',
+        publishDate: 1557641755000,
+        viewCount: 25,
+        uniqueViewCount: 1,
+        rating: 5,
+        contentId: '2'
+      }, {
+        articleId: '1',
+        title: 'How to quickly understand java',
+        authorName: 'Yaxing Li',
+        publishDate: 1557641755000,
+        viewCount: 25,
+        uniqueViewCount: 1,
+        rating: 5,
+        contentId: '2'
+      }]
+    const cards = articles.map((article) => {
+      return (
+        <Card className="Card111" nativeOnClick={() => this.testAAA(article.articleId)}>
+          <div class="content" >
+            <div class="Title">
+              {article.title}
+            </div>
+          </div>
+          <div class="description" style={ { color: this.textColor } }>
+            Posted: {new Date(article.publishDate)} Author: {article.authorName} View Count: {article.viewCount}
+          </div>
+        </Card>
+      )
+    })
     return (
       <div class="Post">
         <Header />
         <div class="container">
+          {cards}
           <Card className="Card111">
-            <div class="content">
+            <div class="content" >
               <div class="Title">
-                How to quickly understand java
+                asd
               </div>
             </div>
-            <div onClick={this.testAAA} class="description" style={ { color: this.textColor } }>
-              Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
+            <div class="description" style={ { color: this.textColor } }>
+              aaaaa
             </div>
           </Card>
-          <div class="Card">
-            <div class="content">
-              <div class="Title">
-                How to quickly understand java
-              </div>
-            </div>
-            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-            </div>
-          </div>
-          <div class="Card">
-            <div class="content">
-              <div class="Title">
-                How to quickly understand java
-              </div>
-            </div>
-            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-            </div>
-          </div>
-          <div class="Card">
-            <div class="content">
-              <div class="Title">
-                How to quickly understand java
-              </div>
-            </div>
-            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-            </div>
-          </div>
-          <div class="Card">
-            <div class="content">
-              <div class="Title">
-                How to quickly understand java
-              </div>
-            </div>
-            <div class="description">Posted: 05/21/2019 Author: Devo View Count: 1 <br/>Tags: News, Sport, Economic
-            </div>
-          </div>
         </div>
         <Footer />
       </div>

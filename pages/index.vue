@@ -18,7 +18,7 @@ export default {
   },
   render () {
     return (
-      <div className="Home">
+      <div class="Home">
         <Header />
         <div>
         Homed<br />

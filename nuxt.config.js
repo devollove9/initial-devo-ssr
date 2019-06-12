@@ -60,7 +60,8 @@ module.exports = {
   ],
   styleResources: {
     scss: [
-      'sass/_variables.scss'
+      'sass/_variables.scss',
+      'sass/_global.scss'
     ]
   },
   /*

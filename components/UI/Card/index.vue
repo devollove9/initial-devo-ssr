@@ -1,23 +1,23 @@
 <script>
 export default {
   name: 'Card',
-  methods: {
-    onClickEvent (e) {
-      if (this.onClick) {
-        this.onClick(e)
-      }
-    }
-  },
-  data () {
-    return {
-    }
-  },
   props: {
     className: String,
     defaultVal: String,
     onClick: Function,
     w: Number,
     h: Number
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    onClickEvent (e) {
+      if (this.onClick) {
+        this.onClick(e)
+      }
+    }
   },
   render () {
     return (

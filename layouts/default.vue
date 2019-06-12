@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="default-container">
     <nuxt />
   </div>
 </template>
@@ -15,6 +15,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+.default-container {
+  height: 100%;
 }
 
 *,
