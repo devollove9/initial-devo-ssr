@@ -1,11 +1,12 @@
 <script>
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import Header from '~/components/Header'
+import Footer from '~/components/Footer'
 
-import { Card } from '@/components/UI'
+import { Card } from '~/components/UI'
 
-import i18n from '@/libs/i18n'
+import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
+import ArticleApi from '~/services/api/ArticleApi'
 
 export default {
   name: 'Post',
@@ -13,49 +14,50 @@ export default {
   },
   data () {
     return {
-      textColor: 'red'
+      title: 'Post',
+      textColor: 'red',
+      articles: []
     }
+  },
+  async asyncData () {
+    let articles
+    const res = await ArticleApi.getInfo({})
+    if (!res.data) articles = []
+    else {
+      articles = res.data
+    }
+    return { articles: articles }
   },
   beforeCreate () {
     i18n(localeMessage, this.$store)
   },
   methods: {
-    testAAA (a) {
-      console.log(a)
+    chooseArticle (articleId) {
+      this.$router.push({ path: '/a/' + articleId })
       this.textColor = 'orange'
     }
   },
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.title }
+      ]
+    }
+  },
   render () {
-    const articles = [
-      {
-        articleId: '1',
-        title: 'How to quickly understand java',
-        authorName: 'Yaxing Li',
-        publishDate: 1557641755000,
-        viewCount: 25,
-        uniqueViewCount: 1,
-        rating: 5,
-        contentId: '2'
-      }, {
-        articleId: '1',
-        title: 'How to quickly understand java',
-        authorName: 'Yaxing Li',
-        publishDate: 1557641755000,
-        viewCount: 25,
-        uniqueViewCount: 1,
-        rating: 5,
-        contentId: '2'
-      }]
-    const cards = articles.map((article) => {
+    const cards = this.articles.map((article) => {
+      const d = new Date(article.publishDate)
+      const date = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear()
       return (
-        <Card className="Card111" nativeOnClick={() => this.testAAA(article.articleId)}>
+        <Card className="Card111" nativeOnClick={() => this.chooseArticle(article.articleId)}>
           <div class="content" >
             <div class="Title">
               {article.title}
             </div>
           </div>
           <div class="description" style={ { color: this.textColor } }>
-            Posted: {new Date(article.publishDate)} Author: {article.authorName} View Count: {article.viewCount}
+            Posted: {date} Author: {article.authorName} View Count: {article.viewCount}
           </div>
         </Card>
       )

@@ -8,10 +8,23 @@ export default {
   name: 'NotFound',
   components: {
   },
+  data () {
+    return {
+      title: 'Page not found - Initial.Devo'
+    }
+  },
   beforeCreate () {
     // i18n(localeMessage)
   },
   methods: {
+  },
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.title }
+      ]
+    }
   },
   render () {
     return (

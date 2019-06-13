@@ -28,13 +28,12 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    'highlight.js/styles/idea.css',
     'sass/_element.scss',
-    'sass/_variables.scss',
-    'sass/_highlightjs.scss',
     'quill/dist/quill.snow.css',
     'quill/dist/quill.bubble.css',
-    'quill/dist/quill.core.css'
+    'quill/dist/quill.core.css',
+    'highlight.js/styles/github.css',
+    'sass/_highlightjs.scss'
   ],
 
   /*

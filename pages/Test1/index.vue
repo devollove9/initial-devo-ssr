@@ -1,15 +1,15 @@
 <template>
   <div>
-    <Article />
+    <WriteArticle />
   </div>
 </template>
 
 <script>
-import Article from '~/components/Article'
+import WriteArticle from '~/components/WriteArticle'
 
 export default {
   components: {
-    Article
+    WriteArticle
   }
 }
 </script>

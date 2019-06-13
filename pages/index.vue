@@ -11,10 +11,23 @@ export default {
     Header,
     Footer
   },
+  data () {
+    return {
+      title: 'Home - Initial.Devo'
+    }
+  },
   async beforeCreate () {
     await i18n(localeMessage, this.$store)
   },
   methods: {
+  },
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.title }
+      ]
+    }
   },
   render () {
     return (

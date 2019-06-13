@@ -6,7 +6,7 @@
 <script>
 import NotFound from '~/pages/NotFound'
 export default {
-  name: 'nuxt-error',
+  name: 'NuxtError',
   layout: 'default', // optional
   props: {
     error: {

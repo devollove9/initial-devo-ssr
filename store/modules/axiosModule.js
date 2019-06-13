@@ -6,15 +6,6 @@ const localeModule = {
   state: {
     requestDetail: {},
     data: {}
-  },
-  actions: {
-    http (context, payload) {
-      // console.log(context)
-      // console.log(payload)
-    },
-    async https ({ dispatch, commit }) {
-      await dispatch('http')
-    }
   }
 }
 
