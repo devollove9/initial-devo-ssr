@@ -1,7 +1,7 @@
 <template>
   <div :key="componentKey" class="Header">
     <header class="header">
-      <div class="container">
+      <div class="header-container">
         <Logo className="logo" :logoPath="require('~/assets/logo.jpg')" :onClick="onClickLogo" />
         <div class="menu">
           <el-menu :router="true" :default-active="activeMenu" class="el-menu-demo" mode="horizontal" @select="handleMenuSelect">

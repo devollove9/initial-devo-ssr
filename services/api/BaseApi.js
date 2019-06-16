@@ -51,6 +51,21 @@ class BaseApiClass {
     }
     return response.data
   }
+
+  async put (path, body = null) {
+    const response = await axios
+      .put(
+        this.HOST + path,
+        body,
+        {
+          headers: this.header
+        }
+      )
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(response.data)
+    }
+    return response.data
+  }
 }
 
 const BaseApi = new BaseApiClass()

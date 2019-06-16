@@ -25,10 +25,10 @@ export default {
     }
   },
   async asyncData ({ app, params }) {
-    const asd = await ArticleApi.getInfo({ articleId: params.id })
-    if (!asd.data) app.router.push({ path: '/notfound' })
+    const res = await ArticleApi.getInfo({ articleId: params.id })
+    if (!res.data) app.router.push({ path: '/notfound' })
     else {
-      const articleInfo = asd.data[0]
+      const articleInfo = res.data[0]
       return { articleInfo: articleInfo }
     }
   },
@@ -63,6 +63,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
   @import './index.scss';
 </style>

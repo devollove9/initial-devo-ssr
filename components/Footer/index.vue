@@ -1,6 +1,6 @@
 <template>
   <footer class="Footer">
-    <div class="container">
+    <div class="footer-container">
       <div class="privacyAndRights">
         All right reserved © Initial. Devo. 2015
       </div>

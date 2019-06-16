@@ -1,11 +1,15 @@
 .ql-snow .ql-editor pre.ql-syntax {
-  // background-color: $grey-dark;
-
-
 }
 .ql-syntax {
-  border: 1px solid grey;
+  border: 1px solid #CDCFD1;
   border-radius: 5px;
+  background-color: $grey-mint;
+  margin: 10px 30px 10px 30px;
+  padding: 20px 20px 20px 20px;
+  overflow: auto;
+  min-height: 100px;
+  max-height: 500px;
+  resize: vertical;
 }
 
 /* Tomorrow Theme */

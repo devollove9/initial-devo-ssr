@@ -5,16 +5,16 @@
   position: absolute;
   background-color: $grey;
   @media (max-width:1217px){
-    .container {
+    .footer-container {
       width:100%;
     }
   }
   @media (min-width:1217px){
-    .container {
+    .footer-container {
       width:1200px;
     }
   }
-  .container {
+  .footer-container {
     margin: 0 auto;
     height: 100%;
     display: flex;
