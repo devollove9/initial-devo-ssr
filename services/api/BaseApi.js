@@ -66,6 +66,21 @@ class BaseApiClass {
     }
     return response.data
   }
+
+  async del (path, body = null) {
+    const response = await axios
+      .delete(
+        this.HOST + path,
+        {
+          headers: this.header,
+          data: body
+        }
+      )
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(response.data)
+    }
+    return response.data
+  }
 }
 
 const BaseApi = new BaseApiClass()

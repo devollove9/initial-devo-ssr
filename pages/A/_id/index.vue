@@ -3,8 +3,8 @@ import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
+import Article from '~/components/Article'
 import ArticleApi from '~/services/api/ArticleApi'
-import hljs from 'highlight.js'
 
 export default {
   name: 'A',
@@ -17,12 +17,6 @@ export default {
     }
   },
   computed: {
-    editor () {
-      return this.myQuillEditor
-    },
-    contentCode () {
-      return hljs.highlightAuto(this.content).value
-    }
   },
   async asyncData ({ app, params }) {
     const res = await ArticleApi.getInfo({ articleId: params.id })
@@ -42,7 +36,7 @@ export default {
   },
   head () {
     return {
-      title: this.title,
+      title: this.articleInfo.title || this.title,
       meta: [
         { hid: 'description', name: 'description', content: 'Article' }
       ]
@@ -50,12 +44,9 @@ export default {
   },
   render () {
     return (
-      <div class="Article" >
+      <div class="A" >
         <Header/>
-        <div class="container" >
-          <div class="content" domPropsInnerHTML={this.articleInfo.content}>
-          </div>
-        </div>
+        <Article articleInfo = {this.articleInfo} />
         <Footer/>
       </div>
     )

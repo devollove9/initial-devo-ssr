@@ -3,4 +3,32 @@
     max-width: 900px;
     margin: 0 auto;
   }
+  .topEditor{
+    width: 100%;
+    display: block;
+    height: 400px;
+    .topLeftEditor{
+      display: inline-block;
+      float: left;
+      width: 30%;
+    }
+    .middleEditor{
+      display: inline-block;
+      float: left;
+      width: 20%;
+    }
+    .toAddCategories {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .topRightEditor{
+      display: inline-block;
+      float: right;
+      width: 40%;
+    }
+    .addCategories {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
 }

@@ -1,15 +1,6 @@
-.Article {
+.A{
   position: relative;
   padding-top: $header-distance;
   padding-bottom: $bottom-distance;
   min-height: 100%;
-  .container {
-    max-width:900px;
-    margin: 0 auto;
-
-    .content {
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
-  }
 }

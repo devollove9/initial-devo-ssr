@@ -1,0 +1,31 @@
+.InfoTag {
+  font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+  color: $black-megalight;
+  .center {
+    margin-top: 10px;
+  }
+
+  .tagContent {
+    font-size: 19px;
+    letter-spacing: -1px;
+    margin: 0 8px 0 0;
+    font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+  }
+  .grey {
+    font-size: 16px;
+    color: $grey-fill;
+    letter-spacing: 0px;
+  }
+  .publishdate {
+    display: inline-block;
+    font-size: 16px;
+  }
+  .views {
+    color: $black-megalight;
+    margin-left: 5px;
+  }
+  .arthorName {
+    display: inline-block;
+    font-size: 16px;
+  }
+}

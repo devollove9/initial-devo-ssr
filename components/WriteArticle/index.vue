@@ -1,23 +1,45 @@
 <template>
   <div class="WriteArticle">
     <div class="container">
-      <button @click="upLoadMyArticle">Post</button>
-      <p>Title: {{ title }}</p>
-      <input v-model="title" placeholder="title">
-      <p>Author: {{ authorName }}</p>
-      <input v-model="authorName" placeholder="author">
-      <p>ArticleId: {{ articleId }}</p>
-      <input v-model="articleId" placeholder="articleId">
-      <p>ViewCount: {{ viewCount }}</p>
-      <input v-model="viewCount" placeholder="ViewCount">
-      <p>UniqueViewCount: {{ uniqueViewCount }}</p>
-      <input v-model="uniqueViewCount" placeholder="UniqueViewCount">
-      <p>Publish Date: {{ new Date(publishDate) }}</p>
-      <input v-model="publishDate" placeholder="">
-      <p>Update Date: {{ new Date(updateDate) }}</p>
-      <p>Change Content?: {{ changeContent }}</p>
-      <input v-model="changeContent" placeholder="Change Content">
-      <button @click="getArticle">Load</button>
+      <div class="topEditor">
+        <div class="topLeftEditor">
+          <button @click="upLoadMyArticle">Post/Update</button>
+          <p>ArticleId: {{ articleId }}</p>
+          <input v-model="articleId" placeholder="articleId">
+          <button @click="getArticle">Load</button>
+          <p>Title: {{ title }}</p>
+          <input v-model="title" placeholder="title">
+          <p>Author: {{ authorName }}</p>
+          <input v-model="authorName" placeholder="author">
+          <p>ViewCount: {{ viewCount }}</p>
+          <input v-model="viewCount" placeholder="ViewCount">
+          <p>UniqueViewCount: {{ uniqueViewCount }}</p>
+          <input v-model="uniqueViewCount" placeholder="UniqueViewCount">
+          <p>Publish Date: {{ publishDate }}</p>
+          <input v-model="publishDate" placeholder="">
+          <p>Update Date: {{ updateDate }}</p>
+          <input v-model="updateDate" placeholder="">
+          <p>Change Content?: {{ changeContent }}</p>
+          <input v-model="changeContent" placeholder="Change Content">
+        </div>
+        <div class="middleEditor">
+          Categories:
+          <div class="toAddCategories" v-for="(item, i) in toAddCategory" :key="i">
+            <Category :categoryInfo="item" />
+          </div>
+        </div>
+        <div class="topRightEditor">
+          <div>
+            <div class="addCategories" v-for="(item, i) in categoryInfo" :key="i">
+              <Category :categoryInfo="item" />
+              <button @click="addOrRemoveCategory(item)">Add/Remove</button>
+            </div>
+          </div>
+          <input v-model="categoryName" placeholder="Category Name">
+          <input v-model="categoryNameCN" placeholder="Category Name CN">
+          <button @click="addArticleCategory">Add Category</button>
+        </div>
+      </div>
       <div class="quill-editor-example">
         <div
           v-model="content"
@@ -34,10 +56,27 @@
 </template>
 
 <script>
+import Category from '~/components/Article/Category'
 import hljs from 'highlight.js'
 import ArticleApi from '~/services/api/ArticleApi'
+import ArticleCategoryApi from '~/services/api/ArticleCategoryApi'
+import ArticleToCategoryApi from '~/services/api/ArticleToCategoryApi'
+
+const findItemIdx = (itemArray, target) => {
+  for (let i = 0; i < itemArray.length; i++) {
+    if (itemArray[i].articleCategoryId === target) {
+      return i
+    }
+  }
+  return -1
+}
+
 export default {
   components: {
+    Category
+  },
+  props: {
+    categoryInfo: Array
   },
   data () {
     return {
@@ -50,6 +89,9 @@ export default {
       changeContent: '',
       publishDate: 0,
       updateDate: 0,
+      toAddCategory: [],
+      categoryName: '',
+      categoryNameCN: '',
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>`,
       editorOption: {
         modules: {
@@ -91,6 +133,40 @@ export default {
     }, 1300)
   },
   methods: {
+    async addOrRemoveCategory (category) {
+      if (this.articleId) {
+        const idx = findItemIdx(this.toAddCategory, category.articleCategoryId)
+        let res
+        if (idx < 0) {
+          res = await ArticleToCategoryApi.postInfo(
+            { articleId: this.articleId, articleCategoryId: category.articleCategoryId })
+        } else {
+          res = await ArticleToCategoryApi.deleteInfo(
+            { articleId: this.articleId, articleCategoryId: category.articleCategoryId })
+        }
+        if (!res.data) {
+          console.log(res.error)
+          alert(res.error)
+        } else {
+          // console.log("Upload Success")
+          this.getArticle()
+          if (idx < 0) alert('Article Category Add Success')
+          if (idx >= 0) alert('Article Category Remove Success')
+        }
+      }
+    },
+    async addArticleCategory () {
+      if (this.categoryName && this.categoryNameCN) {
+        const res = await ArticleCategoryApi.postInfo({ name: this.categoryName, nameCN: this.categoryNameCN })
+        if (!res.data) {
+          console.log(res.error)
+          alert(res.error)
+        } else {
+          // console.log("Upload Success")
+          alert('Category Add Success')
+        }
+      }
+    },
     async upLoadMyArticle () {
       const newA = {
         title: this.title,
@@ -138,6 +214,7 @@ export default {
           this.updateDate = res.data[0].updateDate
           this.uniqueViewCount = res.data[0].uniqueViewCount
           this.content = res.data[0].content
+          this.toAddCategory = res.data[0].categories
         }
       }
     },

@@ -19,6 +19,7 @@ module.exports = {
     "vue/attribute-hyphenation": 'never',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/require-default-prop': 'off',
+    'vue/no-unused-components': 'off',
     'vue/valid-v-model': 'off'
   }
 }

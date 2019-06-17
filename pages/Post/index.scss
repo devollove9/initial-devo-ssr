@@ -5,38 +5,37 @@
   min-height: 100%;
   .container {
     margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+    padding: 3px;
     .Card {
       position: relative;
-      margin: 0 auto;
-      margin-top: 30px;
-      margin-bottom: 30px;
-      width: 500px;
-      height: 150px;
-      border: 1px solid grey;
-      border-radius: 5px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      height: 120px;
+      border: 1px solid $black-megalight;
+      border-radius: 3px;
     }
-    .Card2 {
-      margin: 0 auto;
-      margin-top: 15px;
-      width: 500px;
-      height: 150px;
-      border: 1px solid grey;
-      border-radius: 5px;
+    .Card:hover {
+      transform: scale(1.02); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     }
     .content {
-      padding: 10px 0 0 0;
-      text-align: center;
-      text-decoration: underline;
-      color: blue;
-      height: 65%;
-      font-size: 32px;
-      border-bottom: 1px solid grey;
+      padding: 10px 0 0 10px;
+      text-align: left;
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: $black-light;
     }
     .description {
       padding: 5px 0 0 10px;
       text-align: left;
-      color: grey;
-      font-size: 13px;
+    }
+    .title {
+      white-space: nowrap;
+      font-size: 24px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

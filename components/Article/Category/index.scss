@@ -1,0 +1,23 @@
+.Category{
+  cursor: pointer;
+  display: inline-block;
+  .categoryInfo {
+    font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 3px;
+    border: 1px solid $grey-tag-border;
+    background-color: $grey-tag-background;
+    margin: 5px 5px 5px 0;
+    padding: .2rem .4rem;
+    color: $grey-darker;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+  }
+  .categoryInfo:hover {
+    background-color: $grey-tag-background-hover;
+  }
+}
