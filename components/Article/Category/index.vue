@@ -17,10 +17,16 @@ export default {
     // i18n(localeMessage, this.$store)
   },
   methods: {
+    onClickEvent (e, c) {
+      this.$router.push({ path: '/post?name=' + c.name })
+    }
   },
   render () {
     return (
-      <div class="Category" >
+      <div class="Category" onClick={(e) => {
+        e.stopPropagation()
+        this.onClickEvent(e, this.categoryInfo)
+      }}>
         <div class="categoryInfo">
           <span>
             {(this.$store.getters.getActiveLocale === 'en-US') ? this.categoryInfo.name : this.categoryInfo.nameCN }

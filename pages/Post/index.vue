@@ -2,11 +2,11 @@
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import InfoTag from '~/components/Article/InfoTag'
-import { Card } from '~/components/UI'
+import { Card, Input } from '~/components/UI'
 
 import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
-import ArticleApi from '~/services/api/ArticleApi'
+import ArticleSearchApi from '~/services/api/ArticleSearchApi'
 
 export default {
   name: 'Post',
@@ -15,24 +15,56 @@ export default {
   data () {
     return {
       title: 'Post',
-      articles: []
+      articles: [],
+      searchText: ''
     }
   },
-  async asyncData () {
+  watch: {
+    '$route' (to, from) {
+      window.location.reload(true)
+    }
+  },
+  async asyncData ({ app }) {
     let articles
-    const res = await ArticleApi.getInfo({})
+    const query = {}
+    if (app.router.history.current.query) {
+      const categories = app.router.history.current.query
+      for (const k in categories) {
+        if (categories.hasOwnProperty(k)) {
+          query[k] = categories[k].split(',')
+        }
+      }
+    }
+    const res = await ArticleSearchApi.postInfo(query)
     if (!res.data) articles = []
     else {
       articles = res.data
     }
-    return { articles: articles }
+    return { articles: articles, query: query }
   },
   beforeCreate () {
     i18n(localeMessage, this.$store)
   },
   methods: {
+    onChangeInput (e) {
+      this.searchText = e.target.value
+    },
     chooseArticle (articleId) {
-      this.$router.push({ path: '/a/' + articleId })
+      // this.$router.push({ path: '/a/' + articleId })
+      if (!window) return
+      window.open(window.location.origin + '/a/' + articleId, '_blank')
+    },
+    async searchArticle () {
+      if (this.searchText) {
+        this.query.text = this.searchText
+        this.query.searchArticle = true
+        const res = await ArticleSearchApi.postInfo(this.query)
+        if (!res.data) this.articles = []
+        else {
+          this.articles = res.data
+        }
+      }
+      await console.log(this.searchText)
     }
   },
   head () {
@@ -48,11 +80,11 @@ export default {
       // const d = new Date(article.publishDate)
       // const date = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear()
       return (
-        <Card class="Card" nativeOnClick={() => this.chooseArticle(article.articleId)}>
+        <Card className="articles" nativeOnClick={() => this.chooseArticle(article.articleId)}>
           <div class="content" >
             <h1 class="title">{article.title}</h1>
           </div>
-          <div class="description" style={ { color: this.textColor } }>
+          <div class="description">
             <InfoTag articleInfo={article} />
           </div>
         </Card>
@@ -62,6 +94,16 @@ export default {
       <div class="Post">
         <Header />
         <div class="container">
+          <div>
+            <Card className="searchArticle" >
+              <Input
+                type="searchText"
+                onInput={this.onChangeInput}
+                value={this.searchText}
+                onKeydownEnter={this.searchArticle}
+              />
+            </Card>
+          </div>
           {cards}
         </div>
         <Footer />

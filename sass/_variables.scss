@@ -31,7 +31,7 @@ $green-light:                       #48c0a3;
 $blue-google:                       #4082f2;
 $blue-facebook:                     $blue-strong;
 
-
+$global-border-radius: 3px;
 $universal-background:              $blue-main;
 $universal-background-lighter:      $blue-main-lighter;
 $span-fill:                         $blue;
@@ -40,8 +40,9 @@ $button-disabled:                   $grey-disable;
 $button-fill-darker:                $blue-darker;
 
 $input-text-color:                  $grey-darker;
-$input-border-color:                $grey-dark;
-$input-border-color-focus:          $blue;
+$input-border-color:                $black-megalight;
+$input-border-color-focus:          $grey-darker;
+$input-border-radius:               $global-border-radius;
 $input-placeholder-color:           $grey-lighter;
 $input-caret-color-focus:           $blue-lighter;
 

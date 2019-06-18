@@ -14,17 +14,15 @@ export default {
     ]
     const date2 = new Date()
     let updateDate = ''
-    if (this.articleInfo.updateDate) {
-      const dateUpdate = new Date(this.articleInfo.updateDate)
-      const monthU = monthNames[dateUpdate.getMonth()]
-      const yearU = (dateUpdate.getFullYear() === date2.getFullYear()) ? '' : dateUpdate.getFullYear()
-      let dayU = dateUpdate.getDate()
-      if (dayU === 1) dayU += 'st'
-      if (dayU === 2) dayU += 'nd'
-      if (dayU === 3) dayU += 'rd'
-      if (dayU === 4) dayU += 'th'
-      updateDate = monthU + ' ' + dayU + ' ' + yearU
-    }
+    const dateUpdate = new Date(this.articleInfo.updateDate)
+    const monthU = monthNames[dateUpdate.getMonth()]
+    const yearU = (dateUpdate.getFullYear() === date2.getFullYear()) ? '' : dateUpdate.getFullYear()
+    let dayU = dateUpdate.getDate()
+    if (dayU === 1) dayU += 'st'
+    if (dayU === 2) dayU += 'nd'
+    if (dayU === 3) dayU += 'rd'
+    if (dayU === 4) dayU += 'th'
+    updateDate = monthU + ' ' + dayU + ' ' + yearU
     const month = monthNames[date.getMonth()]
     const year = (date.getFullYear() === date2.getFullYear()) ? '' : date.getFullYear()
     let day = date.getDate()
@@ -55,8 +53,8 @@ export default {
         <div class="center">
           <div class="firstrow">
             <span class="tagContent arthorName"> {this.articleInfo.authorName} </span>
-            <span class="tagContent grey"> {(this.updateDate === this.publishDate) ? ` updated on ` : ` published on `}</span>
-            <span class="tagContent publishdate"> {(this.updateDate === this.publishDate) ? this.updateDate : this.publishDate} </span>
+            <span class="tagContent grey"> {(this.articleInfo.updateDate === this.articleInfo.publishDate) ? ` published on ` : ` updated on `}</span>
+            <span class="tagContent publishdate"> {(this.articleInfo.updateDate === this.articleInfo.publishDate) ? this.publishDate : this.updateDate} </span>
           </div>
           <div class="secondrow">
             {this.categories}

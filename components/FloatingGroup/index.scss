@@ -1,0 +1,63 @@
+.SocialGroup-floating {
+  width: 48px;
+  position: fixed;
+  right: 13px;
+  display: flex;
+  flex-direction: column;
+
+  .facebook {
+    background-image: url('~assets/images/social_facebook_nobackground.png');
+  }
+  .twitter {
+    background-image: url('~assets/images/social_twitter_nobackground.png');
+  }
+  .instagram {
+    background-image: url('~assets/images/social_instagram_nobackground.png');
+  }
+  .youtube {
+    background-image: url('~assets/images/social_youtube_nobackground.png');
+  }
+  .linkedin {
+    background-image: url('~assets/images/linkedin-128-nobackground.png');
+    background-size: contain;
+  }
+  .backToTop {
+    background-image: url('~assets/images/backToTop-160-128-nobackground.png');
+    background-size: contain;
+  }
+  .github {
+    background-image: url('~assets/images/github_nobackground.png');
+    background-size: contain;
+  }
+}
+
+.SocialGroup-floating.active {
+  bottom: 70px;
+}
+.SocialGroup-floating.stop {
+  top:365px;
+}
+@media (max-width:500px){
+  .SocialGroup-floating {
+    display:none;
+  }
+}
+
+.floating-button {
+  flex-basis: 48px;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  margin-bottom: 8px;
+  background: $black-light no-repeat center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 100px;
+  &:hover {
+    box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.7);
+  }
+  &:active {
+    background-color: $black;
+    transform: translate(0.3px,0.3px);
+  }
+}

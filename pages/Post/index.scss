@@ -7,17 +7,21 @@
     margin: 0 auto;
     width: 100%;
     max-width: 600px;
-    padding: 3px;
-    .Card {
+    padding: 30px 5px 30px 5px;
+
+    .articles {
+      cursor: pointer;
       position: relative;
       margin-top: 10px;
       margin-bottom: 10px;
       height: 120px;
       border: 1px solid $black-megalight;
       border-radius: 3px;
+      color: $black-light;
     }
-    .Card:hover {
-      transform: scale(1.02); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    .articles:hover {
+      color: $blue-main;
+      // transform: scale(1.005); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     }
     .content {
       padding: 10px 0 0 10px;
@@ -25,7 +29,6 @@
       text-decoration: none;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: $black-light;
     }
     .description {
       padding: 5px 0 0 10px;
@@ -36,6 +39,12 @@
       font-size: 24px;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+
+    .searchArticle {
+      border: 0px solid $black-megalight;
+      height: 60px;
     }
   }
 }

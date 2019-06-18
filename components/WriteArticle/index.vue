@@ -185,6 +185,9 @@ export default {
       } else {
         newA.userId = '000003f6b5132ccdfb906d'
         newA.content = this.editor.root.innerHTML
+        newA.categories = this.toAddCategory.map((c) => {
+          return c.articleCategoryId
+        })
         res = await ArticleApi.postInfo(newA)
       }
       if (!res.data) {

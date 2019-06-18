@@ -37,7 +37,6 @@ export default {
         Homed<br />
         Homed<br />Homed<br />Homed<br />Homed<br />Homed<br />Homed<br />Homed<br />Homed<br />
         </div>
-
         <Footer/>
       </div>
     )
