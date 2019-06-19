@@ -1,9 +1,11 @@
 .Card {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0);
+  padding: 0 0 5px 0;
+  border-radius: $global-border-radius;
 }
 
 .Card:hover {
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .Card:active {
   transform: translate(0.1px,0.1px);

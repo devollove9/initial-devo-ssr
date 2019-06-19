@@ -8,7 +8,8 @@ export default {
   props: {
     className: String,
     articleInfo: Object,
-    onClick: Function
+    onClick: Function,
+    serverTime: Number
   },
   data () {
     return {
@@ -25,7 +26,7 @@ export default {
       <div class="ArticleTitle" >
         <div class="container" >
           <h1 class="title">{this.articleInfo.title}</h1>
-          <InfoTag articleInfo={this.articleInfo} />
+          <InfoTag serverTime={this.serverTime} articleInfo={this.articleInfo} />
         </div>
       </div>
     )

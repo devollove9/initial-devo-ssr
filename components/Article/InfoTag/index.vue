@@ -1,44 +1,28 @@
 <script>
 import Category from '~/components/Article/Category'
+import i18n from '~/libs/i18n'
+import getDate from '~/libs/getDate'
+import localeMessage from './index.i18n.js'
 
 export default {
   name: 'InfoTag',
   props: {
     className: String,
-    articleInfo: Object
+    articleInfo: Object,
+    serverTime: Number
   },
   data () {
-    const date = new Date(this.articleInfo.publishDate)
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ]
-    const date2 = new Date()
-    let updateDate = ''
-    const dateUpdate = new Date(this.articleInfo.updateDate)
-    const monthU = monthNames[dateUpdate.getMonth()]
-    const yearU = (dateUpdate.getFullYear() === date2.getFullYear()) ? '' : dateUpdate.getFullYear()
-    let dayU = dateUpdate.getDate()
-    if (dayU === 1) dayU += 'st'
-    if (dayU === 2) dayU += 'nd'
-    if (dayU === 3) dayU += 'rd'
-    if (dayU === 4) dayU += 'th'
-    updateDate = monthU + ' ' + dayU + ' ' + yearU
-    const month = monthNames[date.getMonth()]
-    const year = (date.getFullYear() === date2.getFullYear()) ? '' : date.getFullYear()
-    let day = date.getDate()
-    if (day === 1) day += 'st'
-    if (day === 2) day += 'nd'
-    if (day === 3) day += 'rd'
-    if (day === 4) day += 'th'
-
     const categoryInfo = this.articleInfo.categories.map((category) => {
       return (<Category categoryInfo = {category} />)
     })
     return {
-      publishDate: month + ' ' + day + ' ' + year,
+      publishDate: getDate(this.$store.getters.getActiveLocale, this.articleInfo.publishDate),
       categories: categoryInfo,
-      updateDate: updateDate
+      updateDate: getDate(this.$store.getters.getActiveLocale, this.articleInfo.updateDate)
     }
+  },
+  async beforeCreate () {
+    await i18n(localeMessage, this.$store)
   },
   methods: {
     onClickEvent (e) {
@@ -53,12 +37,13 @@ export default {
         <div class="center">
           <div class="firstrow">
             <span class="tagContent arthorName"> {this.articleInfo.authorName} </span>
-            <span class="tagContent grey"> {(this.articleInfo.updateDate === this.articleInfo.publishDate) ? ` published on ` : ` updated on `}</span>
-            <span class="tagContent publishdate"> {(this.articleInfo.updateDate === this.articleInfo.publishDate) ? this.publishDate : this.updateDate} </span>
+            <span class="tagContent grey"> {(this.articleInfo.updateDate === this.articleInfo.publishDate) ? ` ${this.$t('article.infoTag.publishedOn')} ` : ` ${this.$t('article.infoTag.updatedOn')} `}{(this.serverTime - this.articleInfo.updateDate > 1728000000 && this.$store.getters.getActiveLocale === 'en-US') ? 'on' : ''}</span>
+            <span class="tagContent publishdate">
+              {(this.articleInfo.updateDate === this.articleInfo.publishDate) ? getDate(this.$store.getters.getActiveLocale, this.articleInfo.publishDate, this.serverTime) : getDate(this.$store.getters.getActiveLocale, this.articleInfo.updateDate, this.serverTime)},</span>
+            <span class="tabContent views"> {this.articleInfo.viewCount}{(this.$store.getters.getActiveLocale === 'en-US') ? ' ' : ''}{this.$t('article.infoTag.views')}</span>
           </div>
           <div class="secondrow">
             {this.categories}
-            <span class="tabContent views"> {this.articleInfo.viewCount} views</span>
           </div>
         </div>
       </div>

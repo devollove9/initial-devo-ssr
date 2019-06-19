@@ -21,6 +21,9 @@ export default {
     }
   },
   render () {
+    if (this.styles.height) {
+      this.styles.paddingLeft = this.styles.height
+    }
     return (
       <input
         style={this.styles}

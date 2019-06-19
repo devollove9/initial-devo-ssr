@@ -5,6 +5,7 @@ import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import Article from '~/components/Article'
 import ArticleApi from '~/services/api/ArticleApi'
+import PublicCommonGetServerTimeApi from '~/services/api/PublicCommonGetServerTimeApi'
 
 export default {
   name: 'A',
@@ -13,17 +14,23 @@ export default {
   data () {
     return {
       title: 'Article',
-      articleInfo: {}
+      articleInfo: {},
+      serverTime: 0
     }
   },
   computed: {
   },
   async asyncData ({ app, params }) {
+    let serverTime = new Date().getTime()
+    const s = await PublicCommonGetServerTimeApi.getInfo({})
+    if (s.data) {
+      serverTime = s.data.timestamp
+    }
     const res = await ArticleApi.getInfo({ articleId: params.id })
     if (!res.data) app.router.push({ path: '/notfound' })
     else {
       const articleInfo = res.data[0]
-      return { articleInfo: articleInfo }
+      return { articleInfo: articleInfo, serverTime: serverTime }
     }
   },
   validate ({ params }) {
@@ -46,7 +53,7 @@ export default {
     return (
       <div class="A" >
         <Header/>
-        <Article articleInfo = {this.articleInfo} />
+        <Article serverTime={this.serverTime} articleInfo = {this.articleInfo} />
         <Footer/>
       </div>
     )

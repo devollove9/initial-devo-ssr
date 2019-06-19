@@ -10,6 +10,7 @@ export default {
     className: String,
     articleInfo: Object,
     onClick: Function,
+    serverTime: Number,
     w: Number,
     h: Number
   },
@@ -27,7 +28,7 @@ export default {
     return (
       <div class="Article" >
         <div class="container" >
-          <ArticleTitle articleInfo = {this.articleInfo} />
+          <ArticleTitle serverTime={this.serverTime} articleInfo={this.articleInfo} />
           <div class="content" domPropsInnerHTML={this.articleInfo.content}>
           </div>
         </div>

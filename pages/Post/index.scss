@@ -7,44 +7,107 @@
     margin: 0 auto;
     width: 100%;
     max-width: 600px;
-    padding: 30px 5px 30px 5px;
+    padding: 30px 3px 30px 3px;
 
     .articles {
       cursor: pointer;
       position: relative;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      height: 120px;
-      border: 1px solid $black-megalight;
-      border-radius: 3px;
-      color: $black-light;
+      padding: 0 0 10px 6px;
+
+      border-top: 1px solid $grey-super-light;
+      border-radius: 1px;
+      color: $grey-darker;
     }
     .articles:hover {
-      color: $blue-main;
-      // transform: scale(1.005); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      color: $black;
+      transform: translate(-1px,0) scale(1.015); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      -webkit-transition: transform 0.4s ease-in-out;
+      -moz-transition:transform 0.4s ease-in-out;
+      -ms-transition:transform 0.4s ease-in-out;
     }
     .content {
       padding: 10px 0 0 10px;
       text-align: left;
-      text-decoration: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      // overflow: hidden;
     }
     .description {
       padding: 5px 0 0 10px;
       text-align: left;
     }
     .title {
-      white-space: nowrap;
       font-size: 24px;
+      //overflow: hidden;
+      min-height: 40px;
+      max-height: 60px;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
+    .searchContainer {
+      margin-top: 10px;
+      color: $black-megalight;
+      padding: 0 10px 0 10px;
+    }
+    .searchToolBox {
+      color: inherit;
+      padding: 5px;
+      .collapse-searchDetail {
+        color: inherit;
+        .advancedSearch {
+          cursor: pointer;
+          display: inline-block;
+        }
+        .choosePageLimit {
+          display: inline-block;
+          float: right;
+          .choice {
+            margin-left: 4px;
+            margin-right: 4px;
+            cursor: pointer;
+          }
+          .choice:hover {
+            color: $grey-darker;
+            text-decoration: underline;
+          }
+          .selected {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    .searchResult {
+      padding: 0 15px 0 15px;
+      color: $black-megalight;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
 
     .searchArticle {
-      border: 0px solid $black-megalight;
-      height: 60px;
+      margin-bottom: 10px;
+      border: 0 solid $black-megalight;
+      height: 45px;
+    }
+
+    .contentItems {
+      margin-top: 10px;
+    }
+    .pager {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 18px;
+      color: $black-megalight;
+      .pageSelect {
+        padding: 6px;
+        margin-left: 1px;
+        margin-right: 1px;
+        cursor: pointer;
+      }
+      .pageSelect.selected {
+        text-decoration: underline;
+      }
+      .pageSelect:hover {
+        color: $grey-darker;
+        text-decoration: underline;
+      }
     }
   }
 }

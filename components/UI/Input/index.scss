@@ -1,6 +1,8 @@
 .ui-input {
   width: 100%;
-  height: 58px;
+  height: 100%;
+  min-height: 40px;
+  min-width: 100px;
   border-radius: $input-border-radius;
   border: 1px solid $input-border-color;
   padding: 0 24px 0 24px;
@@ -12,7 +14,6 @@
 
 .ui-input:focus {
   // caret-color: $input-caret-color-focus;
-  height: 58px;
   border: 1px solid $input-border-color-focus;
 }
 
@@ -68,17 +69,20 @@
     // background: url('assets/icons/input_phone_focus.png') no-repeat scroll 24px 14px;
   }
 }
+body:after{
+  display:none;
+  content: url('~static/images/search-icon-nobackground-333333.png');
+}
 
 .searchText {
-  padding-left: 60px;
-  font-size: 22px;
+  font-size: 19px;
   line-height: 1.25em;
-  background: url('~assets/images/search-icon-nobackground-8a8a8a.png') no-repeat scroll 10px 11px;
+  background: url('~static/images/search-icon-nobackground-8a8a8a.png') no-repeat scroll 0 0;
   &:focus {
-    background: url('~assets/images/search-icon-nobackground-333333.png') no-repeat scroll 10px 11px;
-    background-size: 35px 35px;
+    background: url('~static/images/search-icon-nobackground-333333.png') no-repeat scroll 0 0;
+    background-size: contain;
   }
-  background-size: 35px 35px;
+  background-size: contain;
 }
 
 

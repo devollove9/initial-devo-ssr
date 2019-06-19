@@ -2,7 +2,7 @@
   <div :key="componentKey" class="Header">
     <header class="header">
       <div class="header-container">
-        <Logo className="logo" :logoPath="require('~/assets/logo.jpg')" :onClick="onClickLogo" />
+        <Logo className="logo" :logoPath="require('~/assets/logo.png')" :onClick="onClickLogo" />
         <div class="menu">
           <el-menu :router="true" :default-active="activeMenu" class="el-menu-demo" mode="horizontal" @select="handleMenuSelect">
             <el-menu-item index="/">{{ $t('header.menu.home') }}</el-menu-item>
