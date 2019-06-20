@@ -8,6 +8,11 @@ body {
   min-height: 100%;
 }
 
+body:after{
+  display:none;
+  content: url('~static/images/search-icon-nobackground-333333.png');
+}
+
 button:focus {
   outline:0;
 }

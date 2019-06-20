@@ -1,15 +1,10 @@
 <template>
   <div class="default-container">
     <nuxt />
-    <FloatingGroup />
   </div>
 </template>
 <script>
-import FloatingGroup from '~/components/FloatingGroup'
 export default {
-  components: {
-    FloatingGroup
-  }
 }
 </script>
 <style>

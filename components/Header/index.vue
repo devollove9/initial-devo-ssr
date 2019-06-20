@@ -1,47 +1,3 @@
-<template>
-  <div :key="componentKey" class="Header">
-    <header class="header">
-      <div class="header-container">
-        <Logo className="logo" :logoPath="require('~/assets/logo.png')" :onClick="onClickLogo" />
-        <div class="menu">
-          <el-menu :router="true" :default-active="activeMenu" class="el-menu-demo" mode="horizontal" @select="handleMenuSelect">
-            <el-menu-item index="/">{{ $t('header.menu.home') }}</el-menu-item>
-            <el-menu-item index="/post">{{ $t('header.menu.post') }}</el-menu-item>
-            <el-submenu index="product">
-              <template slot="title">{{ $t('header.menu.product') }}</template>
-              <el-menu-item index="product-1">1</el-menu-item>
-              <el-menu-item index="product-2">2</el-menu-item>
-              <el-menu-item index="product-3">3</el-menu-item>
-              <el-submenu index="product-4">
-                <template slot="title">4</template>
-                <el-menu-item index="product-4-1">1</el-menu-item>
-                <el-menu-item index="product-4-2">2</el-menu-item>
-                <el-menu-item index="product-4-3">3</el-menu-item>
-              </el-submenu>
-            </el-submenu>
-            <el-menu-item v-t="'header.menu.resource'" index="/resource" />
-            <el-menu-item index="/aboutme">{{ $t('header.menu.about') }}</el-menu-item>
-          </el-menu>
-        </div>
-        <div :class="'menuIconAll'">
-          <IconDropDown
-            trigger="click"
-            className="menuIcon"
-            :srcPath="require('@/assets/icon/icons8-menu-grey-darker.svg')"
-            :onSelect="onSelectMenuIcon"
-            :items="menuItems"
-            :w="35"
-            :h="35"
-          />
-        </div>
-        <div :class="'switchLanguage'">
-          <TextDropDown :defaultVal="activeLocale" :onSelect="onSelectLocale" :items="languageLocales" />
-        </div>
-      </div>
-    </header>
-  </div>
-</template>
-
 <script>
 import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
@@ -67,8 +23,8 @@ export default {
       languageLocales: localeOptions,
       menuItems: [
         { key: 'home', value: 'header.menu.home' },
-        { key: 'product', value: 'header.menu.product' },
         { key: 'post', value: 'header.menu.post' },
+        { key: 'product', value: 'header.menu.product' },
         { key: 'resource', value: 'header.menu.resource' },
         { key: 'about', value: 'header.menu.about' }
       ]
@@ -97,10 +53,60 @@ export default {
       this.$router.push(e)
     },
     onClickLogo (e) {
+      this.$router.push('/')
     },
     handleMenuSelect (e) {
       // await this.$router.push(e)
     }
+  },
+  render () {
+    return (
+      <div key="componentKey" class="Header">
+        <header class="header">
+          <div class="header-container">
+            <Logo className="logoHeader" onClick={this.onClickLogo}/>
+            <div class="menu">
+              <el-menu router={true} default-active={this.activeMenu} class="el-menu-demo" mode="horizontal" onSelect={this.handleMenuSelect}>
+                <el-menu-item index="/">{ this.$t('header.menu.home') }</el-menu-item>
+                <el-menu-item index="/post">{ this.$t('header.menu.post') }</el-menu-item>
+                <el-submenu index="product">
+                  <template slot="title">{ this.$t('header.menu.product') }</template>
+                  <el-menu-item index="product-1">1</el-menu-item>
+                  <el-menu-item index="product-2">2</el-menu-item>
+                  <el-menu-item index="product-3">3</el-menu-item>
+                  <el-submenu index="product-4">
+                    <template slot="title">4</template>
+                    <el-menu-item index="product-4-1">1</el-menu-item>
+                    <el-menu-item index="product-4-2">2</el-menu-item>
+                    <el-menu-item index="product-4-3">3</el-menu-item>
+                  </el-submenu>
+                </el-submenu>
+                <el-menu-item v-t={ this.$t('header.menu.resource') } index="/resource" />
+                <el-menu-item index="/aboutme">{ this.$t('header.menu.about') }</el-menu-item>
+              </el-menu>
+            </div>
+            <div class="menuIconAll">
+              <IconDropDown
+                trigger="click"
+                class="menuIcon"
+                srcPath="icon/icons8-menu-grey-darker.svg"
+                onSelect={this.onSelectMenuIcon}
+                items={this.menuItems}
+                w={35}
+                h={35}
+              />
+            </div>
+            <div class="switchLanguage">
+              <TextDropDown
+                defaultVal={this.activeLocale}
+                onSelect={this.onSelectLocale}
+                items={this.languageLocales}
+              />
+            </div>
+          </div>
+        </header>
+      </div>
+    )
   }
 }
 </script>

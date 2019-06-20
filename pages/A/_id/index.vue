@@ -3,6 +3,7 @@ import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
+import FloatingGroup from '~/components/FloatingGroup'
 import Article from '~/components/Article'
 import ArticleApi from '~/services/api/ArticleApi'
 import PublicCommonGetServerTimeApi from '~/services/api/PublicCommonGetServerTimeApi'
@@ -55,6 +56,7 @@ export default {
         <Header/>
         <Article serverTime={this.serverTime} articleInfo = {this.articleInfo} />
         <Footer/>
+        <FloatingGroup />
       </div>
     )
   }

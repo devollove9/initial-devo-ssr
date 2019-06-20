@@ -2,6 +2,7 @@
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import InfoTag from '~/components/Article/InfoTag'
+import FloatingGroup from '~/components/FloatingGroup'
 import { Card, Input } from '~/components/UI'
 
 import i18n from '~/libs/i18n'
@@ -20,8 +21,44 @@ export default {
       searchText: ''
     }
   },
+  computed: {
+    totalRecords () {
+      let totalRecords = 0
+      if (this.articles.length > 0) totalRecords = this.articles[0].total
+      return totalRecords
+    },
+    totalPages () {
+      let totalPages = 1
+      if (this.totalRecords > this.articles.length) {
+        totalPages = Math.ceil(this.totalRecords / this.query.limit)
+      }
+      return totalPages
+    },
+    pages () {
+      const pages = []
+      let start = 1
+      let end = this.totalPages
+      let offset = 0
+      start = this.query.page - 5
+      if (start < 1) {
+        offset = -start + 1
+        start = 1
+      }
+      end = this.query.page + 4 + offset
+      if (end > this.totalPages) {
+        start -= end - this.totalPages
+        end = this.totalPages
+        if (start < 1) start = 1
+      }
+      for (let i = start; i <= end; i++) {
+        if (i === this.query.page) pages.push({ page: i, selected: 'selected' })
+        else pages.push({ page: i, selected: '' })
+      }
+      return pages
+    }
+  },
   watch: {
-    '$route' (to, from) {
+    '$route' () {
       window.location.reload(true)
     }
   },
@@ -48,14 +85,9 @@ export default {
       query.page = 1
     }
     const res = await ArticleSearchApi.postInfo(query)
-    let totalRecords = 0
+
     if (!res.data) articles = []
-    else {
-      articles = res.data
-      if (res.data.length > 0) {
-        totalRecords = res.data[0].total
-      }
-    }
+    else articles = res.data
     const pageSize = [
       { size: 10, selected: 'selected' },
       { size: 1, selected: '' },
@@ -68,38 +100,11 @@ export default {
     if (!query.limit) {
       query.limit = pageSize[0].size
     }
-    let totalPages = 1
-    if (totalRecords > articles.length) {
-      const d = query.limit || pageSize[0].size
-      totalPages = Math.ceil(totalRecords / d)
-    }
-    const pages = []
-    let start = 1
-    let end = totalPages
-    let offset = 0
-    start = query.page - 5
-    if (start < 1) {
-      offset = -start
-      start = 1
-    }
-    end = query.page + 5 + offset
-    if (end > totalPages) {
-      start -= end - totalPages
-      end = totalPages
-      if (start < 1) start = 1
-    }
-    for (let i = start; i <= end; i++) {
-      if (i === query.page) pages.push({ page: i, selected: 'selected' })
-      else pages.push({ page: i, selected: '' })
-    }
     return {
       articles: articles,
       query: query,
       serverTime: serverTime,
       pageSize: pageSize,
-      pages: pages,
-      totalPages: totalPages,
-      totalRecords: totalRecords,
       searched: searched
     }
   },
@@ -115,52 +120,30 @@ export default {
       if (!window) return
       window.open(window.location.origin + '/a/' + articleId, '_blank')
     },
-    async changePage (e, page) {
+    changePage (e, page) {
+      this.$nuxt.$loading.start()
+      if (window) window.scrollTo(0, 0)
       if (page === 'previous') this.query.page = this.query.page - 1
       else if (page === 'next') this.query.page = this.query.page + 1
       else this.query.page = page
-      const res = await ArticleSearchApi.postInfo(this.query)
-      this.totalRecords = 0
+      this.performArticleSearch()
+      this.$nuxt.$loading.finish()
+    },
+    handleSearchText () {
       if (this.searchText) this.query.text = this.searchText
       else {
         delete this.query.text
         delete this.query.searchArticle
       }
-      if (!res.data) this.articles = []
-      else {
-        this.articles = res.data
-        if (res.data.length > 0) this.totalRecords = res.data[0].total
-      }
-      this.totalPages = 1
-      if (this.totalRecords > this.articles.length) {
-        this.totalPages = Math.ceil(this.totalRecords / this.query.limit)
-      }
-      const pages = []
-      let start = 1
-      let end = this.totalPages
-      let offset = 0
-      start = this.query.page - 5
-      if (start < 1) {
-        offset = -start
-        start = 1
-      }
-      end = this.query.page + 5 + offset
-      if (end > this.totalPages) {
-        start -= end - this.totalPages
-        end = this.totalPages
-        if (start < 1) start = 1
-      }
-      for (let i = start; i <= end; i++) {
-        if (i === this.query.page) pages.push({ page: i, selected: 'selected' })
-        else pages.push({ page: i, selected: '' })
-      }
-      this.pages = pages
     },
-    async changePageSize (e, pageSize) {
+    selectPageSize () {
       for (let i = 0; i < this.pageSize.length; i++) {
         this.pageSize[i].selected = ''
-        if (this.pageSize[i].size === pageSize) this.pageSize[i].selected = 'selected'
+        if (this.pageSize[i].size === this.query.limit) this.pageSize[i].selected = 'selected'
       }
+    },
+    async changePageSize (e, pageSize) {
+      this.$nuxt.$loading.start()
       this.serverTime = new Date().getTime()
       const s = await PublicCommonGetServerTimeApi.getInfo({})
       if (s.data) {
@@ -168,88 +151,39 @@ export default {
       }
       this.query.limit = pageSize
       this.query.page = 1
-      if (this.searchText) this.query.text = this.searchText
-      else {
+      this.selectPageSize()
+      this.handleSearchText()
+      this.performArticleSearch()
+      this.$nuxt.$loading.finish()
+    },
+    searchArticle () {
+      if (this.searchText) {
+        this.$nuxt.$loading.start()
+        this.query.text = this.searchText
+        this.query.searchArticle = true
+        this.query.limit = this.pageSize[0].size
+        this.query.page = 1
+        const res = this.performArticleSearch()
+        if (res) {
+          this.searched = true
+          this.selectPageSize()
+        }
+        this.$nuxt.$loading.finish()
+      } else {
         delete this.query.text
         delete this.query.searchArticle
       }
-      const res = await ArticleSearchApi.postInfo(this.query)
-      this.totalRecords = 0
-      if (!res.data) this.articles = []
-      else {
-        this.articles = res.data
-        if (res.data.length > 0) this.totalRecords = res.data[0].total
-      }
-      this.totalPages = 1
-      if (this.totalRecords > this.articles.length) {
-        this.totalPages = Math.ceil(this.totalRecords / this.query.limit)
-      }
-      const pages = []
-      let start = 1
-      let end = this.totalPages
-      let offset = 0
-      start = this.query.page - 5
-      if (start < 1) {
-        offset = -start
-        start = 1
-      }
-      end = this.query.page + 5 + offset
-      if (end > this.totalPages) {
-        start -= end - this.totalPages
-        end = this.totalPages
-        if (start < 1) start = 1
-      }
-      for (let i = start; i <= end; i++) {
-        if (i === this.query.page) pages.push({ page: i, selected: 'selected' })
-        else pages.push({ page: i, selected: '' })
-      }
-      this.pages = pages
     },
-    async searchArticle () {
-      if (this.searchText) {
-        this.query.text = this.searchText
-        this.query.searchArticle = true
-        this.query.limit = this.pages[0].size
-        this.query.page = 1
-        const res = await ArticleSearchApi.postInfo(this.query)
-        this.totalRecords = 0
-        if (!res.data) this.articles = []
-        else {
-          this.searched = true
-          this.articles = res.data
-          if (res.data.length > 0) {
-            this.totalRecords = res.data[0].total
-          }
-          for (let i = 0; i < this.pageSize.length; i++) {
-            this.pageSize[i].selected = ''
-            if (i === 0) this.pageSize[i].selected = 'selected'
-          }
-        }
-        this.totalPages = 1
-        if (this.totalRecords > this.articles.length) {
-          this.totalPages = Math.ceil(this.totalRecords / this.query.limit)
-        }
-        const pages = []
-        let start = 1
-        let end = this.totalPages
-        let offset = 0
-        start = this.query.page - 5
-        if (start < 1) {
-          offset = -start
-          start = 1
-        }
-        end = this.query.page + 5 + offset
-        if (end > this.totalPages) {
-          start -= end - this.totalPages
-          end = this.totalPages
-          if (start < 1) start = 1
-        }
-        for (let i = start; i <= end; i++) {
-          if (i === this.query.page) pages.push({ page: i, selected: 'selected' })
-          else pages.push({ page: i, selected: '' })
-        }
-        this.pages = pages
+    async performArticleSearch () {
+      const res = await ArticleSearchApi.postInfo(this.query)
+      if (!res.data) {
+        this.articles = []
+        return false
+      } else {
+        this.articles = res.data
+        this.searchText = this.query.text
       }
+      return true
     }
   },
   head () {
@@ -283,7 +217,6 @@ export default {
         </span>
       )
     })
-
     const pageIndexes = this.pages.map((p) => {
       return (
         <span
@@ -292,7 +225,6 @@ export default {
         >{p.page}</span>
       )
     })
-
     return (
       <div class="Post">
         <Header />
@@ -318,8 +250,8 @@ export default {
               </div>
             </div>
           </div>
-          {this.searched && <div class="searchResult">
-            {this.totalRecords > 0 ? this.$t('post.about') + ' ' + this.totalRecords + ' ' + this.$t('post.recordFound') : this.$t('post.noRecord')}
+          {(this.searched || this.query.name) && <div class="searchResult">
+            {this.totalRecords > 0 ? this.$t('post.found') + ' ' + this.totalRecords + ' ' + this.$t('post.recordFound') : this.$t('post.noRecord')}
           </div>}
           <div class="contentItems">
             {cards}
@@ -332,6 +264,7 @@ export default {
             </div>
           }
         </div>
+        <FloatingGroup />
         <Footer />
       </div>
     )

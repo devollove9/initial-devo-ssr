@@ -4,8 +4,8 @@
   max-height: $logo-height;
   max-width: $logo-width;
   position: relative;
-  margin-left: 10px;
-
+  background: url('~static/images/logo.png') no-repeat;
+  cursor: pointer;
   .circle{
     height: 51px;
     width: 52px;

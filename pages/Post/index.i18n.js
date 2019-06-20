@@ -4,10 +4,11 @@ const IndexI18n = {
       show: 'Show',
       advanced: 'Advanced',
       all: 'All',
-      result: 'records every page',
+      result: 'records',
       about: 'About',
-      recordFound: 'records found',
-      noRecord: 'No record found, try something else?',
+      found: 'Found',
+      recordFound: 'records',
+      noRecord: 'No record found, try change search conditions?',
       previous: 'Previous',
       next: 'Next'
     }
@@ -18,9 +19,10 @@ const IndexI18n = {
       advanced: '高级',
       all: '全部',
       result: '记录',
-      about: '找到',
+      found: '找到',
+      about: '关于',
       recordFound: '条记录',
-      noRecord: '没有找到相关记录, 试试别的？',
+      noRecord: '没有找到相关记录, 试试跟换搜索条件？ ',
       previous: '上一页',
       next: '下一页'
     }

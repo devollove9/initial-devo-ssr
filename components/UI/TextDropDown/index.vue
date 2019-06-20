@@ -11,26 +11,6 @@ const findItem = (itemArray, key) => {
 
 export default {
   name: 'TextDropDown',
-  methods: {
-    onClickEvent (e) {
-      if (this.onClick) {
-        this.onClick(e)
-      }
-    },
-    onSelectEvent (e) {
-      this.defaultValue = findItem(this.$data.dropDowns, e).value
-      if (this.onSelect) {
-        this.onSelect(e)
-      }
-    }
-  },
-  data () {
-    const d = this.items || [ { value: 'Menu' } ]
-    return {
-      defaultValue: this.defaultVal || d[0].value,
-      dropDowns: d
-    }
-  },
   props: {
     className: String,
     defaultVal: String,
@@ -41,6 +21,26 @@ export default {
     placeHolder: Object,
     trigger: String,
     items: Array
+  },
+  data () {
+    const d = this.items || [ { value: 'Menu' } ]
+    return {
+      defaultValue: this.defaultVal || d[0].value,
+      dropDowns: d
+    }
+  },
+  methods: {
+    onClickEvent (e) {
+      if (this.onClick) {
+        this.onClick(e)
+      }
+    },
+    onSelectEvent (e) {
+      this.defaultValue = findItem(this.$data.dropDowns, e).value
+      if (this.$listeners.select) {
+        this.$listeners.select(e)
+      }
+    }
   },
   render () {
     const dropDowns = this.items || [ { value: 'Menu' } ]
