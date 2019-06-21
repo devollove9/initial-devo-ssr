@@ -20,20 +20,27 @@
     background-position: 10px 10px;
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 712px) {
     .menu {
       display: none;
     }
     .menuIconAll {
       display: inline-block;
     }
+    .userPanelHeader {
+      margin-right: 10px;
+    }
+
   }
-  @media (min-width: 680px) {
+  @media (min-width: 712px) {
     .menu {
       display: inline-block;
     }
     .menuIconAll {
       display: none;
+    }
+    .userPanelHeader {
+      margin-right: 20px;
     }
   }
   .menu {
@@ -41,31 +48,18 @@
     min-width: 460px;
     float: left;
   }
-  .switchLanguage {
-    float:right;
-    flex: 0 1 auto;
-    margin-left: auto;
-    margin-right:24px;
-    display: inline-block;
-    margin-top: 18px;
-    select {
-      display: inline-block;
-      float: right;
-    }
-  }
   .menuIconAll {
     margin-top: 12px;
     float: right;
     margin-right: 20px;
     cursor: pointer;
   }
-
-
-
-}
-
-
-li a select {
-  text-decoration: none;
-  cursor: pointer;
+  .userPanelHeader {
+    float:right;
+    flex: 0 1 auto;
+    margin-left: auto;
+    display: inline-block;
+    padding-top: 19px;
+    height: 100%;
+  }
 }

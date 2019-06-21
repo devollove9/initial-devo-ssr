@@ -6,7 +6,8 @@ const IndexI18n = {
         product: 'Product',
         post: 'Post',
         resource: 'Resource',
-        about: 'About me'
+        about: 'About me',
+        signin: 'Sign In'
       },
       'localeName': 'English',
       'title': 'Devo'
@@ -19,7 +20,8 @@ const IndexI18n = {
         product: '产品',
         post: '随笔',
         resource: '资料',
-        about: '关于我'
+        about: '关于我',
+        signin: '登录'
       },
       'localeName': '中文',
       'title': 'Yaxing Li'

@@ -13,18 +13,15 @@ const findItem = (itemArray, key) => {
 
 export default {
   name: 'IconDropDown',
-  methods: {
-    onClickEvent (e) {
-      if (this.onClick) {
-        this.onClick(e)
-      }
-    },
-    onSelectEvent (e) {
-      this.defaultValue = findItem(this.$data.dropDowns, e).value
-      if (this.onSelect) {
-        this.onSelect(e)
-      }
-    }
+  props: {
+    className: String,
+    defaultVal: String,
+    placeHolder: Object,
+    w: Number,
+    h: Number,
+    items: Array,
+    trigger: String,
+    srcPath: String
   },
   data () {
     const d = this.items || [{ value: 'Menu' }]
@@ -33,17 +30,18 @@ export default {
       dropDowns: d
     }
   },
-  props: {
-    className: String,
-    defaultVal: String,
-    onClick: Function,
-    onSelect: Function,
-    placeHolder: Object,
-    w: Number,
-    h: Number,
-    items: Array,
-    trigger: String,
-    srcPath: String
+  methods: {
+    onClickEvent (e) {
+      if (this.$listeners.click) {
+        this.$listeners.click(e)
+      }
+    },
+    onSelectEvent (e) {
+      this.defaultValue = findItem(this.$data.dropDowns, e).value
+      if (this.$listeners.select) {
+        this.$listeners.select(e)
+      }
+    }
   },
   render () {
     const dropDowns = this.items || [{ value: 'Menu' }]

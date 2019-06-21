@@ -1,7 +1,13 @@
 <template>
   <div class="SignUpForm">
+    <p class="description">
+      <span v-if="!signUpSuccess">{{ $t('signUpForm.titleCreate') }}</span>
+      <span v-else>{{ $t('signUpForm.titleSuccess') }}</span>
+    </p>
     <el-form
+      v-if="!signUpSuccess"
       ref="ruleForm"
+      class="signup-container"
       :model="ruleForm"
       status-icon
       :rules="rules"
@@ -37,16 +43,35 @@
       <div class="privacyAndTerms-container">
         <p>
           {{ $t('signUpForm.statement.p1') + $t('signUpForm.submit') + $t('signUpForm.statement.p2') }}
-          <span class="privacyAndTerms" @click="jumpTo('terms')">{{ $t('signUpForm.statement.termsAndService') }}</span>
+          <span class="hyperlink" @click="jumpTo('terms')">{{ $t('signUpForm.statement.termsAndService') }}</span>
           {{ $t('signUpForm.statement.and') }}
-          <span class="privacyAndTerms" @click="jumpTo('privacy')">{{ $t('signUpForm.statement.privacyStatement') }}</span>
+          <span class="hyperlink" @click="jumpTo('privacy')">{{ $t('signUpForm.statement.privacyStatement') }}</span>
           {{ $t('signUpForm.statement.end') }}
         </p>
       </div>
       <el-form-item class="form-button">
         <el-button class="form-button-submit" type="primary" @click.prevent="onSubmit">{{ $t('signUpForm.submit') }}</el-button>
+        <div class="form-button-signin">
+          <span>{{ $t('signUpForm.haveAccount') }}</span>
+          <br />
+          <span class="hyperlink" @click="jumpTo('signin')">{{ $t('signUpForm.signInNow') }}</span>
+        </div>
       </el-form-item>
     </el-form>
+    <div v-else class="signup-success-container" >
+      <div class="successAnim">
+        <ProgressCircle />
+      </div>
+      <p class="description">
+        <span>{{ $t('signUpForm.redirect') + ' ' + pageJumpCountDown + ' ' + $t('signUpForm.seconds') }}</span>
+        <br />
+        <span>{{ $t('signUpForm.goto') }}</span>
+        <span class="hyperlink" @click="jumpTo('home')">{{ $t('signUpForm.homePage') }}</span>
+        <span>{{ $t('signUpForm.or') }}</span>
+        <span class="hyperlink" @click="jumpTo('signin')">{{ $t('signUpForm.signInPage') }}</span>
+        <span>{{ $t('signUpForm.now') }}</span>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -55,9 +80,14 @@ import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
 import validateInput from '~/libs/validateInput'
 import AuthEmailApi from '~/services/api/AuthEmailApi'
+import { ProgressCircle } from '~/components/UI'
 import md5 from 'md5'
+
 export default {
-  name: 'SignIn',
+  name: 'SignUp',
+  components: {
+    ProgressCircle
+  },
   data () {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -83,6 +113,9 @@ export default {
       }
     }
     return {
+      pageJumpCountDown: 10,
+      manuallySwitched: false,
+      signUpSuccess: false,
       running: false,
       checked: 0,
       checkedTime: 0,
@@ -111,21 +144,47 @@ export default {
     await i18n(localeMessage, this.$store)
   },
   methods: {
+    switchSuccess () {
+      this.signUpSuccess = true
+      this.pageJumpCountDown = 10
+      setInterval(() => { this.pageJumpCountDown-- }, 1000)
+      setTimeout(() => {
+        if (window && !this.manuallySwitched) window.open(window.location.origin, '_self')
+      }, 10000)
+    },
     jumpTo (target) {
       if (!window) return
       if (target === 'terms') window.open(window.location.origin + '/terms-of-service', '_blank')
       if (target === 'privacy') window.open(window.location.origin + '/privacy-statement', '_blank')
+      if (target === 'home') {
+        this.manuallySwitched = true
+        window.open(window.location.origin, '_self')
+      }
+      if (target === 'signin') {
+        this.manuallySwitched = true
+        window.open(window.location.origin + '/signin', '_self')
+      }
     },
     onSubmit () {
+      this.$nuxt.$loading.start()
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           const res = await AuthEmailApi.postInfo({ username: this.ruleForm.username, password: md5(this.ruleForm.pass) })
           if (!res.data) {
-            alert('Fail to create account')
+            this.$message({
+              showClose: true,
+              message: this.$t('signUpForm.warning'),
+              type: 'warning',
+              duration: 6000
+            })
           } else {
-            alert('Success fully created account')
+            this.switchSuccess()
           }
-        } else return false
+          this.$nuxt.$loading.finish()
+        } else {
+          this.$nuxt.$loading.finish()
+          return false
+        }
       })
     },
     changePassType () {
@@ -152,6 +211,12 @@ export default {
           const res = await AuthEmailApi.checkInfo({ username: this.ruleForm.username })
           if (!res.data) {
             this.running = false
+            this.$message({
+              showClose: true,
+              message: this.$t('signUpForm.warning'),
+              type: 'warning',
+              duration: 4000
+            })
             return callback(new Error(this.$t('signUpForm.error.usernameInvalid')))
           } else if (res.data.exist === true) {
             this.running = false

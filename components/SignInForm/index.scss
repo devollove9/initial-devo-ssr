@@ -1,0 +1,37 @@
+.SignInForm {
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  .description {
+    font-size: 25px;
+    font-weight: 600;
+    color: $grey-darker;
+  }
+  .signin-container {
+    margin-top: 15px;
+    position: relative;
+    .forget-password {
+      line-height: 16px;
+      position: absolute;
+      right: 0;
+      top: 109px;
+    }
+    .form-button-submit {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  .form-label {
+    label {
+      font-size: 16px !important;
+      padding: 0 !important;
+      height: 35px;
+    }
+    margin-bottom: 22px;
+  }
+  .new-user-signup {
+    font-size: 20px;
+    font-weight: 450;
+    text-align: center;
+  }
+}

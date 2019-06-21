@@ -21,10 +21,17 @@ input:focus {
 }
 #__nuxt {
   height: 100%;
-  min-height: 100%;
 }
 
 #__layout {
   height: 100%;
-  min-height: 100%;
+}
+
+.hyperlink {
+  color: $blue-google;
+  cursor: pointer;
+  &:hover {
+    // text-decoration: underline;
+    color: $blue-strong;
+  }
 }

@@ -1,11 +1,19 @@
 .TextDropDown {
-  position: relative;
-  margin-left: 10px;
   cursor: pointer;
   .dropDownMenu{
     &:hover {
       color: black;
     }
-
+  }
+  span:focus {
+    outline: none;
   }
 }
+.el-dropdown-menu {
+  overflow: hidden !important;
+  .el-dropdown-menu__item {
+    min-width: 50px;
+  }
+}
+
+

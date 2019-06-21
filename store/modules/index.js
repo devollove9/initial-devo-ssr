@@ -1,13 +1,11 @@
 /**
  * Created by devollove9 on 2017/10/22.
  */
-import axios from './axiosModule'
 import locale from './localeModule'
 
 const modules = {
-  locale: locale,
-  axios: axios
+  locale: locale
 }
 
-export { locale, axios }
+export { locale }
 export default modules

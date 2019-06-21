@@ -39,12 +39,12 @@ export default {
       let start = 1
       let end = this.totalPages
       let offset = 0
-      start = this.query.page - 5
+      start = this.query.page - 4
       if (start < 1) {
         offset = -start + 1
         start = 1
       }
-      end = this.query.page + 4 + offset
+      end = this.query.page + 3 + offset
       if (end > this.totalPages) {
         start -= end - this.totalPages
         end = this.totalPages
@@ -77,7 +77,7 @@ export default {
         searched = true
         if (categories.hasOwnProperty(k)) {
           if (k === 'name') query[k] = categories[k].split(',')
-          else query[k] = categories[k]
+          else if (k === 'page' || k === 'limit')query[k] = categories[k]
         }
       }
     }
@@ -90,9 +90,7 @@ export default {
     else articles = res.data
     const pageSize = [
       { size: 10, selected: 'selected' },
-      { size: 1, selected: '' },
-      { size: 2, selected: '' },
-      { size: 3, selected: '' },
+      { size: 5, selected: '' },
       { size: 25, selected: '' },
       { size: 50, selected: '' },
       { size: 0, selected: '' }
@@ -251,7 +249,7 @@ export default {
             </div>
           </div>
           {(this.searched || this.query.name) && <div class="searchResult">
-            {this.totalRecords > 0 ? this.$t('post.found') + ' ' + this.totalRecords + ' ' + this.$t('post.recordFound') : this.$t('post.noRecord')}
+            <span>{this.totalRecords > 0 ? this.$t('post.found') + ' ' + this.totalRecords + ' ' + this.$t('post.recordFound') : this.$t('post.noRecord')}</span>
           </div>}
           <div class="contentItems">
             {cards}

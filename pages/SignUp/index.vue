@@ -1,15 +1,12 @@
 <script>
-import { Logo } from '~/components/UI'
 import SignUpForm from '~/components/SignUpForm'
 import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
-
+import Header from '~/components/Header'
+import Footer from '~/components/Footer'
 export default {
   name: 'SignIn',
   method: {
-    backToRoot () {
-      this.$router.push('/')
-    }
   },
   async beforeCreate () {
     await i18n(localeMessage, this.$store)
@@ -17,20 +14,16 @@ export default {
   render () {
     return (
       <div class='SignUp'>
+        <Header />
         <div class='container'>
-          <div class='header'>
-            <Logo className='logoSignUp' onClick={() => this.backToRoot}/>
-            <h1 class='title'>Join Now</h1>
-            <p class='description'>
-              <span>Whatever reason you doing this, do it!</span>
-              <br/>
-              <span>Create your account now</span>
-            </p>
+          <div class='signup-header'>
+            <h1 class='title'>{this.$t('signup.title')}</h1>
           </div>
           <div class='form'>
             <SignUpForm />
           </div>
         </div>
+        <Footer />
       </div>
     )
   }

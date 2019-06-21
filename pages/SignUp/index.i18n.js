@@ -6,7 +6,7 @@ const IndexI18n = {
   },
   'zh-CN': {
     signup: {
-      title: 'Join Now'
+      title: '立刻加入'
     }
   }
 }

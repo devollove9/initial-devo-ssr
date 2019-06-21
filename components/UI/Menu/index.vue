@@ -13,14 +13,14 @@ export default {
   name: 'Menu',
   methods: {
     onClickEvent (e) {
-      if (this.onClick) {
-        this.onClick(e)
+      if (this.$listeners.click) {
+        this.$listeners.click(e)
       }
     },
     onSelectEvent (e) {
       this.defaultValue = findItem(this.$data.dropDowns, e).value
-      if (this.onSelect) {
-        this.onSelect(e)
+      if (this.$listeners.select) {
+        this.$listeners.click(e)
       }
     }
   },
@@ -50,9 +50,9 @@ export default {
       <div class={'Menu ' + this.className}>
         <el-menu v-bind:default-active={this.defaultKey}  mode={this.mode || "horizontal"}>
           <el-menu-item index="1">{this.$t('header.menu.home')}</el-menu-item>
-          <el-menu-item index="2">{{$t('header.menu.post')}}</el-menu-item>
+          <el-menu-item index="2">{this.$t('header.menu.post')}</el-menu-item>
           <el-submenu index="3">
-            <template slot="title">{{$t('header.menu.product')}}</template>
+            <template slot="title">{this.$t('header.menu.product')}</template>
             <el-menu-item index="3-1">选项1</el-menu-item>
             <el-menu-item index="3-2">选项2</el-menu-item>
             <el-menu-item index="3-3">选项3</el-menu-item>
@@ -63,9 +63,9 @@ export default {
               <el-menu-item index="3-4-3">选项3</el-menu-item>
             </el-submenu>
           </el-submenu>
-          <el-menu-item index="4">{{ $t('header.menu.resource') }}</el-menu-item>
-          <el-menu-item index="5">{{ $t('header.menu.about') }}</el-menu-item>
-      </el-menu>
+          <el-menu-item index="4">{this.$t('header.menu.resource')}</el-menu-item>
+          <el-menu-item index="5">{this.$t('header.menu.about')}</el-menu-item>
+        </el-menu>
       </div>
     )
   }

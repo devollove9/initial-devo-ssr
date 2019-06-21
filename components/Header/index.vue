@@ -2,11 +2,7 @@
 import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
 import { Logo, TextDropDown, IconDropDown } from '~/components/UI'
-
-const localeOptions = [
-  { key: 'en-US', value: 'English' },
-  { key: 'zh-CN', value: '中文' }
-]
+import UserPanel from '~/components/Header/UserPanel'
 
 export default {
   components: {
@@ -15,18 +11,16 @@ export default {
     Logo
   },
   data () {
-    const initialLocale = this.$store.getters.getActiveLocale
     return {
-      activeLocale: this.getLanguageLocaleContent(initialLocale),
       activeMenu: this.$route.path,
       componentKey: 0,
-      languageLocales: localeOptions,
       menuItems: [
         { key: 'home', value: 'header.menu.home' },
         { key: 'post', value: 'header.menu.post' },
         { key: 'product', value: 'header.menu.product' },
         { key: 'resource', value: 'header.menu.resource' },
-        { key: 'about', value: 'header.menu.about' }
+        { key: 'about', value: 'header.menu.about' },
+        { key: 'signIn', value: 'header.menu.signin' }
       ]
     }
   },
@@ -34,22 +28,8 @@ export default {
     await i18n(localeMessage, this.$store)
   },
   methods: {
-    getLanguageLocaleContent (k) {
-      for (const idx in localeOptions) {
-        if (localeOptions[idx].key === k) {
-          return localeOptions[idx].value
-        }
-      }
-      return 'English'
-    },
-    onSelectLocale (e) {
-      const payload = {
-        target: this.$i18n,
-        activeLocale: e
-      }
-      this.$store.commit('changeLocale', payload)
-    },
     onSelectMenuIcon (e) {
+      if (e === 'home') e = '/'
       this.$router.push(e)
     },
     onClickLogo (e) {
@@ -88,20 +68,16 @@ export default {
             <div class="menuIconAll">
               <IconDropDown
                 trigger="click"
-                class="menuIcon"
+                className="menuIcon"
                 srcPath="icon/icons8-menu-grey-darker.svg"
                 onSelect={this.onSelectMenuIcon}
                 items={this.menuItems}
-                w={35}
-                h={35}
+                w={33}
+                h={33}
               />
             </div>
-            <div class="switchLanguage">
-              <TextDropDown
-                defaultVal={this.activeLocale}
-                onSelect={this.onSelectLocale}
-                items={this.languageLocales}
-              />
+            <div class="userPanelHeader">
+              <UserPanel />
             </div>
           </div>
         </header>

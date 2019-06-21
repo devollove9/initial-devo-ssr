@@ -1,0 +1,32 @@
+.UserPanel {
+  @media (max-width: 414px) {
+    .signin {
+      display: none;
+    }
+  }
+  @media (min-width: 414px) {
+
+  }
+  a {
+    text-decoration: none;
+  }
+  .sign-in-sign-out {
+    .panel-button {
+      font-size: 17px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: $gery-dark-transparent;
+      padding: 5px 8px 5px 8px;
+      &:hover {
+        color: $grey-darker;
+        border-color: $grey-darker;
+      }
+    }
+    .signup {
+      border: 2px solid $black-megalight;
+    }
+    .signin {
+      padding-right: 10px;
+    }
+  }
+}

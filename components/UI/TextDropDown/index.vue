@@ -16,8 +16,6 @@ export default {
     defaultVal: String,
     w: Number,
     h: Number,
-    onClick: Function,
-    onSelect: Function,
     placeHolder: Object,
     trigger: String,
     items: Array
@@ -31,8 +29,8 @@ export default {
   },
   methods: {
     onClickEvent (e) {
-      if (this.onClick) {
-        this.onClick(e)
+      if (this.$listeners.click) {
+        this.$listeners.click(e)
       }
     },
     onSelectEvent (e) {
@@ -50,7 +48,7 @@ export default {
       )
     })
     return (
-      <div class={'TextDropDown ' + this.className} onClick={this.onClickEvent}>
+      <div class={'TextDropDown ' + this.className}>
         <el-dropdown v-on:command={this.onSelectEvent} trigger={this.trigger}>
           <span class="el-dropdown-link dropDownMenu">
             {this.defaultValue}<i class="el-icon-arrow-down el-icon--right"></i>

@@ -50,6 +50,7 @@
     .searchToolBox {
       color: inherit;
       padding: 5px;
+      overflow: hidden;
       .collapse-searchDetail {
         color: inherit;
         .advancedSearch {
@@ -88,7 +89,7 @@
     }
 
     .contentItems {
-      margin-top: 10px;
+      margin-top: 20px;
     }
     .pager {
       margin-top: 10px;
@@ -96,6 +97,7 @@
       font-size: 18px;
       color: $black-megalight;
       .pageSelect {
+        display:inline-block;
         padding: 6px;
         margin-left: 1px;
         margin-right: 1px;

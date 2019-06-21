@@ -1,4 +1,10 @@
 .SignUpForm {
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  .signup-container {
+    margin-top: 15px;
+  }
   .form-label {
     label {
       font-size: 16px !important;
@@ -41,12 +47,31 @@
     .form-button-submit {
       width: 160px;
     }
+    .form-button-signin {
+      line-height: 20px;
+      display:inline-block;
+      float: right;
+
+      font-size: 14px;
+    }
   }
-  .privacyAndTerms {
-    color: $blue-google;
-    cursor: pointer;
-    &:hover {
-      text-decoration: underline;
+
+  .privacyAndTerms-container {
+    margin-top: 35px;
+  }
+
+  .description {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .signup-success-container {
+    margin-top: 40px;
+    .successAnim {
+      width: 100%;
+      margin-top: 60px;
+      margin-bottom: 30px;
     }
   }
 

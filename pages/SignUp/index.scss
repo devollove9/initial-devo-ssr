@@ -1,11 +1,16 @@
 .SignUp {
+  position: relative;
+  padding-top: $header-distance;
+  padding-bottom: $bottom-distance;
+  min-height: 100%;
   .container {
-    width: 340px;
+    min-width: 300px;
+    max-width: 340px;
     padding: 5px;
     margin: 0 auto;
-    margin-top: 4.5rem;
   }
-  .header {
+  .signup-header {
+    margin-top: 30px;
     .title {
       margin-top: 10px;
       margin-bottom: 10px;
@@ -13,6 +18,7 @@
     .description {
     }
     .logoSignUp {
+      margin-top: 5rem;
       background-size: 100% 100%;
     }
   }

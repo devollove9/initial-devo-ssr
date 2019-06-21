@@ -9,7 +9,6 @@ export default {
   methods: {
   },
   render () {
-    console.log(this.$listeners)
     return (
       <div class={'logo ' + this.className} onClick={this.$listeners.click}>
         <div className="circle"/>
