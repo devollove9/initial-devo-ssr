@@ -24,6 +24,11 @@ export default {
       ]
     }
   },
+  computed: {
+    isAuthenticated () {
+      return this.$store.state.user.authenticated
+    }
+  },
   async beforeCreate () {
     await i18n(localeMessage, this.$store)
   },
@@ -33,6 +38,7 @@ export default {
       this.$router.push(e)
     },
     onClickLogo (e) {
+      this.$store.commit('signOutUser')
       this.$router.push('/')
     },
     handleMenuSelect (e) {
@@ -65,17 +71,17 @@ export default {
                 <el-menu-item index="/aboutme">{ this.$t('header.menu.about') }</el-menu-item>
               </el-menu>
             </div>
-            <div class="menuIconAll">
+            {!this.isAuthenticated && <div class="menuIconAll">
               <IconDropDown
                 trigger="click"
                 className="menuIcon"
-                srcPath="icon/icons8-menu-grey-darker.svg"
                 onSelect={this.onSelectMenuIcon}
                 items={this.menuItems}
+                srcPath="/icon/icons8-menu-grey-darker.svg"
                 w={33}
                 h={33}
               />
-            </div>
+            </div>}
             <div class="userPanelHeader">
               <UserPanel />
             </div>

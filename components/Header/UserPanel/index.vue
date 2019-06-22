@@ -7,17 +7,28 @@ export default {
   },
   data () {
     return {
+      finishedAuth: false
+    }
+  },
+  computed: {
+    isAuthenticated () {
+      return this.$store.state.user.authenticated
+    },
+    username () {
+      return this.$store.state.user.userInfo.username
     }
   },
   async beforeCreate () {
-    await i18n(localeMessage, this.$store)
+    i18n(localeMessage, this.$store)
+    await this.$store.commit('tryAuth')
+    setTimeout(() => { this.finishedAuth = true }, 500)
   },
   methods: {
   },
   render () {
     return (
       <div class="UserPanel">
-        <div class="sign-in-sign-out">
+        {!this.isAuthenticated && this.finishedAuth && <div class="sign-in-sign-out">
           <a
             class="panel-button signin"
             href={'/signin?source=header-signin'}
@@ -30,7 +41,10 @@ export default {
           >
             {this.$t('header.userpanel.signup')}
           </a>
-        </div>
+        </div>}
+        {!!this.isAuthenticated && <div class="user-avatar">
+          {this.username}
+        </div>}
       </div>
     )
   }

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 class BaseApiClass {
   constructor () {
-    this.HOST = 'http://api.yaxingli.com'
+    this.HOST = process.env.baseApiUrl
     this.header = {
       'Content-Type': 'application/json'
     }
@@ -11,7 +11,7 @@ class BaseApiClass {
     }
   }
 
-  async get (path, query) {
+  async get (path, query, token) {
     let params = '?'
     let first = true
     for (const key in query) {
@@ -24,11 +24,13 @@ class BaseApiClass {
         }
       }
     }
+    const headers = this.header
+    if (token) headers['authentication-token'] = token
     const response = await axios
       .get(
         this.HOST + path + params,
         {
-          headers: this.header
+          headers: headers
         }
       )
     if (process.env.NODE_ENV !== 'production') {
@@ -37,13 +39,15 @@ class BaseApiClass {
     return response.data
   }
 
-  async post (path, body = null) {
+  async post (path, body = null, token) {
+    const headers = this.header
+    if (token) headers['authentication-token'] = token
     const response = await axios
       .post(
         this.HOST + path,
         body,
         {
-          headers: this.header
+          headers: headers
         }
       )
     if (process.env.NODE_ENV !== 'production') {
@@ -52,13 +56,15 @@ class BaseApiClass {
     return response.data
   }
 
-  async put (path, body = null) {
+  async put (path, body = null, token) {
+    const headers = this.header
+    if (token) headers['authentication-token'] = token
     const response = await axios
       .put(
         this.HOST + path,
         body,
         {
-          headers: this.header
+          headers: headers
         }
       )
     if (process.env.NODE_ENV !== 'production') {
@@ -67,12 +73,14 @@ class BaseApiClass {
     return response.data
   }
 
-  async del (path, body = null) {
+  async del (path, body = null, token) {
+    const headers = this.header
+    if (token) headers['authentication-token'] = token
     const response = await axios
       .delete(
         this.HOST + path,
         {
-          headers: this.header,
+          headers: headers,
           data: body
         }
       )

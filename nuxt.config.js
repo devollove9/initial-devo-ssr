@@ -26,6 +26,12 @@ module.exports = {
     failedColor: 'red'
   },
 
+  env: {
+    baseApiUrl: 'http://api.yaxingli.com',
+    domain: 'http://yaxingli.com',
+    appName: 'initial-devo'
+  },
+
   /*
   ** Global CSS
   */
@@ -49,7 +55,7 @@ module.exports = {
   ],
 
   router: {
-    middleware: ['vue-i18n']
+    middleware: ['vue-i18n', 'authenticate', 'router-delay']
   },
   /*
   ** Nuxt.js modules
@@ -70,6 +76,7 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
+    middleware: ['axios-delay']
     // See https://github.com/nuxt-community/axios-module#options
   },
 

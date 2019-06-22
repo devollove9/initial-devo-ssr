@@ -3,13 +3,14 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { locale } from './modules'
+import { locale, user } from './modules'
 
 Vue.use(Vuex)
 
 const index = () => new Vuex.Store({
   modules: {
-    locale
+    locale,
+    user
   }
 })
 

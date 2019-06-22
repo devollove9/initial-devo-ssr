@@ -21,14 +21,14 @@ export default {
   },
   computed: {
   },
-  async asyncData ({ app, params }) {
+  async asyncData ({ app, params, redirect }) {
     let serverTime = new Date().getTime()
     const s = await PublicCommonGetServerTimeApi.getInfo({})
     if (s.data) {
       serverTime = s.data.timestamp
     }
     const res = await ArticleApi.getInfo({ articleId: params.id })
-    if (!res.data) app.router.push({ path: '/notfound' })
+    if (!res.data) redirect('/notfound')
     else {
       const articleInfo = res.data[0]
       return { articleInfo: articleInfo, serverTime: serverTime }

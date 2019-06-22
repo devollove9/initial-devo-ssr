@@ -53,18 +53,18 @@
         <el-button class="form-button-submit" type="primary" @click.prevent="onSubmit">{{ $t('signUpForm.submit') }}</el-button>
         <div class="form-button-signin">
           <span>{{ $t('signUpForm.haveAccount') }}</span>
-          <br />
-          <span class="hyperlink" @click="jumpTo('signin')">{{ $t('signUpForm.signInNow') }}</span>
+          <br>
+          <span class="hyperlink signin" @click="jumpTo('signin')">{{ $t('signUpForm.signInNow') }}</span>
         </div>
       </el-form-item>
     </el-form>
-    <div v-else class="signup-success-container" >
+    <div v-else class="signup-success-container">
       <div class="successAnim">
         <ProgressCircle />
       </div>
       <p class="description">
         <span>{{ $t('signUpForm.redirect') + ' ' + pageJumpCountDown + ' ' + $t('signUpForm.seconds') }}</span>
-        <br />
+        <br>
         <span>{{ $t('signUpForm.goto') }}</span>
         <span class="hyperlink" @click="jumpTo('home')">{{ $t('signUpForm.homePage') }}</span>
         <span>{{ $t('signUpForm.or') }}</span>

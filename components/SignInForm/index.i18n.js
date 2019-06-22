@@ -12,7 +12,11 @@ const IndexI18n = {
         usernameInvalid: 'Unknown error, please try again',
         enterPass: 'Please enter a password',
         enterAgain: 'Please enter password again',
-        enterPassAgain: 'Make sure it\'s at least 8 characters and at most 32 characters, please enter again!'
+        enterPassAgain: 'Make sure it\'s at least 8 characters and at most 32 characters, please enter again!',
+        code: {
+          '2002': 'Incorrect username or password',
+          '2004': 'Unknown error, please try again'
+        }
       },
       forgetPassword: 'Forget password?',
       createAccount: 'New to us?',
@@ -35,7 +39,11 @@ const IndexI18n = {
         usernameExist: '该用户名已存在，请再次尝试',
         enterPass: '请输入密码',
         enterAgain: '请再次输入密码',
-        enterPassAgain: '确保密码长度为8-32位之间，请再次输入密码'
+        enterPassAgain: '确保密码长度为8-32位之间，请再次输入密码',
+        code: {
+          '2002': '用户名或者密码不正确',
+          '2004': '未知错误，请稍后尝试'
+        }
       },
       forgetPassword: '忘记密码？',
       createAccount: '新用户？',
