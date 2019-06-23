@@ -18,7 +18,13 @@ const newModule = {
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
       const cookieKey = domain + '-y-' + process.env.appName
       const cookieVal = state.userInfo.token
-      VueCookie.set(cookieKey, cookieVal, state.userInfo.maxAge, null, domain)
+      let userToken
+      try {
+        userToken = VueCookie.set(cookieKey, cookieVal, state.userInfo.maxAge, null, domain)
+      } catch (e) {
+        console.log(e)
+      }
+      console.log(userToken)
       console.log(cookieKey)
       console.log(VueCookie.get(cookieKey))
       console.log(domain)
