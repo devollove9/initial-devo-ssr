@@ -1,17 +1,18 @@
 {
   "name": "initial-devo-ssr",
   "version": "1.0.0",
-  "description": "My shining Nuxt.js project",
+  "description": "My personal site",
   "author": "devo li",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
-    "start": "cross-env NUXT_PORT=3002 NODE_ENV=production node server/index.js",
+    "start": "cross-env NUXT_PORT=3002 NODE_ENV=production nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "prod": "pm2 start npm --name intial-devo-ssr -- run start"
+    "prod": "pm2 start npm --name initial-devo-ssr -- run start",
+    "restart": "pm2 restart initial-devo-ssr"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
