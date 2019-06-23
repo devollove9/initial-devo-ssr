@@ -1,5 +1,6 @@
-import VueCookie from 'vue-cookies'
+import Cookie from 'js-cookie'
 import AuthUserApi from '~/services/api/AuthUserApi'
+
 const newModule = {
   state () {
     return {
@@ -20,31 +21,33 @@ const newModule = {
       const cookieVal = state.userInfo.token
       let userToken
       try {
-        userToken = VueCookie.set(cookieKey, cookieVal, state.userInfo.maxAge, null, domain)
+        userToken = Cookie.set(cookieKey, cookieVal, state.userInfo.maxAge, null, domain)
       } catch (e) {
         console.log(e)
       }
       console.log(userToken)
       console.log(cookieKey)
-      console.log(VueCookie.get(cookieKey))
+      console.log(Cookie.get(cookieKey))
       console.log(domain)
     },
     signOutUser (state) {
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
       const cookieKey = domain + '-y-' + process.env.appName
-      VueCookie.remove(cookieKey)
+      Cookie.remove(cookieKey)
       state.authenticated = false
       state.token = ''
       state.userInfo = {}
     },
     async tryAuth (state) {
+      console.log('In try auth')
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
       const cookieKey = domain + '-y-' + process.env.appName
       let userToken
       try {
-        userToken = VueCookie.get(cookieKey)
+        userToken = Cookie.get(cookieKey)
       } catch (e) {
       }
+      console.log(userToken)
       if (userToken) {
         const res = await AuthUserApi.renew({ maxAge: 14400 }, userToken)
         if (!res.data) {
@@ -59,7 +62,7 @@ const newModule = {
     getTokenFromCooke (state) {
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
       const cookieKey = domain + '::y::'
-      return VueCookie.get(cookieKey)
+      return Cookie.get(cookieKey)
     },
     getUserToken (state) {
       return state.token
