@@ -1,7 +1,9 @@
 import axios from 'axios'
+import sleep from '@/libs/sleep'
 
 class BaseApiClass {
   constructor () {
+    this.delayTime = 300
     this.HOST = process.env.baseApiUrl
     this.header = {
       'Content-Type': 'application/json'
@@ -11,7 +13,8 @@ class BaseApiClass {
     }
   }
 
-  async get (path, query, token) {
+  async get (path, query, token, delayTime = this.delayTime) {
+    await sleep(delayTime)
     let params = '?'
     let first = true
     for (const key in query) {
@@ -39,7 +42,8 @@ class BaseApiClass {
     return response.data
   }
 
-  async post (path, body = null, token) {
+  async post (path, body = null, token, delayTime = this.delayTime) {
+    await sleep(delayTime)
     const headers = this.header
     if (token) headers['authentication-token'] = token
     const response = await axios
@@ -56,7 +60,8 @@ class BaseApiClass {
     return response.data
   }
 
-  async put (path, body = null, token) {
+  async put (path, body = null, token, delayTime = this.delayTime) {
+    await sleep(delayTime)
     const headers = this.header
     if (token) headers['authentication-token'] = token
     const response = await axios
@@ -73,7 +78,8 @@ class BaseApiClass {
     return response.data
   }
 
-  async del (path, body = null, token) {
+  async del (path, body = null, token, delayTime = this.delayTime) {
+    await sleep(delayTime)
     const headers = this.header
     if (token) headers['authentication-token'] = token
     const response = await axios

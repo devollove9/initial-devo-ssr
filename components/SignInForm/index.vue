@@ -19,8 +19,13 @@
       <el-form-item class="form-label" :label="$t('signInForm.label.password')" prop="pass">
         <el-input v-model="user.pass" type="password" size="large" />
       </el-form-item>
+      <transition name="signinError">
+        <div v-show="showError" class="error-message">
+          <span class="error-detail"> {{ errorMessage }}</span>
+        </div>
+      </transition>
       <el-form-item class="form-button">
-        <el-button :disalbed="submitDisabled" class="form-button-submit" type="primary" @click.prevent="onSubmit">{{ $t('signInForm.submit') }}</el-button>
+        <el-button :disabled="submitDisabled === true" class="form-button-submit" type="primary" @click.prevent="onSubmit">{{ $t('signInForm.submit') }}</el-button>
       </el-form-item>
       <div class="new-user-signup">
         <span>{{ $t('signInForm.createAccount') }}</span>
@@ -32,6 +37,7 @@
 
 <script>
 import i18n from '~/libs/i18n'
+import sleep from '~/libs/sleep'
 import localeMessage from './index.i18n.js'
 import AuthEmailApi from '~/services/api/AuthEmailApi'
 import md5 from 'md5'
@@ -42,6 +48,8 @@ export default {
   },
   data () {
     return {
+      showError: false,
+      errorCode: '',
       submitDisabled: false,
       pageJumpCountDown: 10,
       manuallySwitched: false,
@@ -55,6 +63,11 @@ export default {
       }
     }
   },
+  computed: {
+    errorMessage () {
+      return this.errorCode ? this.$t('signInForm.error.code.' + this.errorCode) : ''
+    }
+  },
   async beforeCreate () {
     await i18n(localeMessage, this.$store)
   },
@@ -66,6 +79,9 @@ export default {
       if (target === 'home') window.open(window.location.origin, '_self')
     },
     async onSubmit () {
+      this.showError = false
+      await sleep(200)
+      this.errorCode = ''
       this.$nuxt.$loading.start()
       this.submitDisabled = true
       const res = await AuthEmailApi.login(
@@ -73,19 +89,18 @@ export default {
           username: this.user.username,
           password: md5(this.user.pass),
           maxAge: 604800
-        }
+        },
+        null,
+        1500
       )
       if (!res.data) {
         let errorCode = '2002'
         if (res.error.errorCode) {
           if (res.error.errorCode.toString() !== errorCode) errorCode = '2004'
         }
-        this.$message({
-          showClose: true,
-          message: this.$t('signInForm.error.code.' + errorCode),
-          type: 'warning',
-          duration: 6000
-        })
+        this.showError = true
+        await sleep(200)
+        this.errorCode = errorCode
         this.submitDisabled = false
         this.$nuxt.$loading.finish()
       } else {

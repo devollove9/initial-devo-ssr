@@ -43,7 +43,11 @@ export default {
           </a>
         </div>}
         {!!this.isAuthenticated && <div class="user-avatar">
-          {this.username}
+          <a>
+            <div class="avatar-wrap" title={this.username}>
+              {this.username[0].toUpperCase()}
+            </div>
+          </a>
         </div>}
       </div>
     )

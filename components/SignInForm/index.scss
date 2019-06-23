@@ -20,6 +20,54 @@
       width: 100%;
       margin-top: 10px;
     }
+    .expand-transition {
+      transition: all .3s ease;
+      height: 30px;
+      padding: 10px;
+      background-color: #eee;
+      overflow: hidden;
+    }
+    /* .expand-enter defines the starting state for entering */
+    /* .expand-leave defines the ending state for leaving */
+    /*
+    .signinError-enter, .signinError-leave-to {
+      height: 0;
+    }
+
+    .signinError-enter-active,
+    .signinError-leave-active {
+      transition: all 0.9s ease-in-out;
+      max-height: 230px;
+    }*/
+    .signinError-leave-active {
+      transition:  all .1s ease-in-out;
+    }
+    .signinError-enter-active {
+      transition:  all .2s ease-in-out;
+    }
+    .signinError-leave-active {
+      height:0 !important;
+    }
+    .signinError-enter {
+      height: 0 !important;
+    }
+    .signinError-enter-active{
+      height: 50px;
+    }
+    .error-message {
+      color: indianred;
+      text-align: center;
+      border: 1px solid indianred;
+      height: 50px;
+      border-radius: $global-border-radius;
+      display: table;
+      width: 100%;
+      margin-bottom: 10px;
+      .error-detail {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
   }
   .form-label {
     label {
@@ -31,7 +79,9 @@
   }
   .new-user-signup {
     font-size: 20px;
-    font-weight: 450;
+    font-weight: 500;
     text-align: center;
   }
 }
+
+

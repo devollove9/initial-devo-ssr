@@ -1,4 +1,5 @@
 .UserPanel {
+  height: 100%;
   @media (max-width: 414px) {
     .signin {
       display: none;
@@ -11,6 +12,8 @@
     text-decoration: none;
   }
   .sign-in-sign-out {
+    padding: 20px 0;
+    height: 100%;
     .panel-button {
       font-size: 17px;
       border-radius: 5px;
@@ -27,6 +30,28 @@
     }
     .signin {
       padding-right: 10px;
+    }
+  }
+
+  .user-avatar {
+    height:80%;
+    padding: 11px 0 0 0;
+    display: table;
+    .avatar-wrap {
+      display: table-cell;
+      vertical-align: middle;
+      font-family: Charcoal, Arial, Helvetica, sans-serif;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 50%;
+      // background-color: #f18989;
+      // border: 0 solid #6e6e6c;
+      background-color: $yellow-dark;
+      color: white;
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      font-weight: 700;
     }
   }
 }

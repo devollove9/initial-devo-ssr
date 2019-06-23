@@ -6,11 +6,14 @@
   height: 60px;
   position: absolute;
   background: transparentize(#FEFEFE, 0.01);
-  box-shadow: 0px 4px 8px -3px rgba(17, 17, 17, .06);
-
+  box-shadow: 0 4px 8px -3px rgba(17, 17, 17, .06);
+  .header {
+    height: 100%;
+  }
   .header-container {
     max-width: 1200px;
     margin: 0 auto;
+    height: 100%;
   }
 
   .logoHeader {
@@ -47,6 +50,14 @@
     margin-left: 30px;
     min-width: 460px;
     float: left;
+    ul {
+      border: none !important;
+      li {
+        font-size: 14px;
+        font-weight: 700;
+        border: none !important;
+      }
+    }
   }
   .menuIconAll {
     margin-top: 12px;
@@ -59,7 +70,6 @@
     flex: 0 1 auto;
     margin-left: auto;
     display: inline-block;
-    padding-top: 19px;
     height: 100%;
   }
 }

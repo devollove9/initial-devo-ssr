@@ -20,7 +20,7 @@ export default {
         { key: 'product', value: 'header.menu.product' },
         { key: 'resource', value: 'header.menu.resource' },
         { key: 'about', value: 'header.menu.about' },
-        { key: 'signIn', value: 'header.menu.signin' }
+        { key: 'signin', value: 'header.menu.signin' }
       ]
     }
   },
