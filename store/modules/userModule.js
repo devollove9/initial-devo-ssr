@@ -11,24 +11,16 @@ const newModule = {
   },
   mutations: {
     updateUserInfo (state, userInfo) {
-      console.log('in update userinfo')
       state.userInfo = userInfo
       state.token = userInfo.token
-      console.log(userInfo, state.userInfo)
       state.authenticated = true
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
       const cookieKey = domain + '-y-' + process.env.appName
       const cookieVal = state.userInfo.token
-      let userToken
       try {
-        userToken = Cookie.set(cookieKey, cookieVal, state.userInfo.maxAge, null, domain)
+        Cookie.set(cookieKey, cookieVal, { expires: state.userInfo.maxAge })
       } catch (e) {
-        console.log(e)
       }
-      console.log(userToken)
-      console.log(cookieKey)
-      console.log(Cookie.get(cookieKey))
-      console.log(domain)
     },
     signOutUser (state) {
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
@@ -39,7 +31,6 @@ const newModule = {
       state.userInfo = {}
     },
     async tryAuth (state) {
-      console.log('In try auth')
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
       const cookieKey = domain + '-y-' + process.env.appName
       let userToken
@@ -47,7 +38,6 @@ const newModule = {
         userToken = Cookie.get(cookieKey)
       } catch (e) {
       }
-      console.log(userToken)
       if (userToken) {
         const res = await AuthUserApi.renew({ maxAge: 14400 }, userToken)
         if (!res.data) {
@@ -61,7 +51,7 @@ const newModule = {
   getters: {
     getTokenFromCooke (state) {
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'
-      const cookieKey = domain + '::y::'
+      const cookieKey = domain + '-y-' + process.env.appName
       return Cookie.get(cookieKey)
     },
     getUserToken (state) {

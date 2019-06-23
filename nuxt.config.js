@@ -28,7 +28,7 @@ module.exports = {
 
   env: {
     baseApiUrl: 'http://api.yaxingli.com',
-    domain: 'http://yaxingli.com',
+    domain: 'yaxingli.com',
     appName: 'initial-devo'
   },
 
