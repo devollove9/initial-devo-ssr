@@ -1,13 +1,16 @@
 import VueCookie from 'vue-cookies'
 import AuthUserApi from '~/services/api/AuthUserApi'
 const newModule = {
-  state: {
-    userInfo: {},
-    token: '',
-    authenticated: false
+  state () {
+    return {
+      userInfo: {},
+      token: '',
+      authenticated: false
+    }
   },
   mutations: {
     updateUserInfo (state, userInfo) {
+      console.log('in update userinfo')
       state.userInfo = userInfo
       state.token = userInfo.token
       console.log(userInfo, state.userInfo)
@@ -16,6 +19,9 @@ const newModule = {
       const cookieKey = domain + '-y-' + process.env.appName
       const cookieVal = state.userInfo.token
       VueCookie.set(cookieKey, cookieVal, state.userInfo.maxAge, null, domain)
+      console.log(cookieKey)
+      console.log(VueCookie.get(cookieKey))
+      console.log(domain)
     },
     signOutUser (state) {
       const domain = (process.env.NODE_ENV === 'production') ? process.env.domain : 'localhost'

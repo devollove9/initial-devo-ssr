@@ -1,6 +1,6 @@
 <template>
   <div :class="'icon ' + className" :style="{width:w +'px', height:h + 'px'}" :click="onClickEvent">
-    <img :class="'iconImg'" alt="Icon" :src="srcPath" />
+    <img :class="'iconImg'" alt="Icon" :src="srcPath"></img>
   </div>
 </template>
 

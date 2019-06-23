@@ -24,13 +24,13 @@
         </div>
         <div class="middleEditor">
           Categories:
-          <div class="toAddCategories" v-for="(item, i) in toAddCategory" :key="i">
+          <div v-for="(item, i) in toAddCategory" :key="i" class="toAddCategories">
             <Category :categoryInfo="item" />
           </div>
         </div>
         <div class="topRightEditor">
           <div>
-            <div class="addCategories" v-for="(item, i) in categoryInfo" :key="i">
+            <div v-for="(item, i) in categoryInfo" :key="i" class="addCategories">
               <Category :categoryInfo="item" />
               <button @click="addOrRemoveCategory(item)">Add/Remove</button>
             </div>
@@ -43,13 +43,12 @@
       <div class="quill-editor-example">
         <div
           v-model="content"
-          class="quill-editor"
           v-quill:myQuillEditor="editorOption"
+          class="quill-editor"
           @blur="onEditorBlur($event)"
           @focus="onEditorFocus($event)"
           @ready="onEditorReady($event)"
-        >
-        </div>
+        />
       </div>
     </div>
   </div>

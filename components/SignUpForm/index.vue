@@ -26,14 +26,14 @@
               :title="$t('signUpForm.showPassword')"
               style="cursor:pointer;}"
               @click="changePassType"
-            ></i>
+            />
             <i
               slot="suffix"
               :class="iconClass2"
               :title="$t('signUpForm.hidePassword')"
               style="cursor:pointer;}"
               @click="changePassType"
-            ></i>
+            />
           </div>
         </el-input>
       </el-form-item>

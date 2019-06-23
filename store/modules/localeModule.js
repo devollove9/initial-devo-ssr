@@ -3,9 +3,11 @@
  */
 import { merge } from 'lodash'
 const localeModule = {
-  state: {
-    activeLocale: 'en-US',
-    locales: {}
+  state () {
+    return {
+      activeLocale: 'en-US',
+      locales: {}
+    }
   },
   mutations: {
     changeLocale (state, payload) {
@@ -22,9 +24,6 @@ const localeModule = {
     },
     getLocales: function (state) {
       return state.locales
-    },
-    getLocale: function (state) {
-      return state
     }
   }
 }
