@@ -17,7 +17,7 @@
         <span class="hyperlink" @click="jumpTo('forget')">{{ $t('signInForm.forgetPassword') }}</span>
       </div>
       <el-form-item class="form-label" :label="$t('signInForm.label.password')" prop="pass">
-        <el-input v-model="user.pass" type="password" size="large" />
+        <el-input v-model="user.pass" type="password" size="large" @keydown.enter.native="onSubmit" />
       </el-form-item>
       <transition name="signinError">
         <div v-show="showError" class="error-message">
@@ -37,6 +37,7 @@
 
 <script>
 import i18n from '~/libs/i18n'
+import validateInput from '~/libs/validateInput'
 import sleep from '~/libs/sleep'
 import localeMessage from './index.i18n.js'
 import AuthEmailApi from '~/services/api/AuthEmailApi'
@@ -78,12 +79,34 @@ export default {
       if (target === 'signup') window.open(window.location.origin + '/signup?source=signin-page', '_self')
       if (target === 'home') window.open(window.location.origin, '_self')
     },
+    async setErrorCode (code, sleepMs = 200) {
+      this.$nuxt.$loading.finish()
+      this.showError = true
+      await sleep(sleepMs)
+      this.errorCode = code
+      this.submitDisabled = false
+    },
     async onSubmit () {
       this.showError = false
       await sleep(200)
       this.errorCode = ''
       this.$nuxt.$loading.start()
+      if (this.submitDisabled) return
       this.submitDisabled = true
+      if (!this.user.username) {
+        this.setErrorCode('0')
+        return
+      } else if (!validateInput('email', this.user.username)) {
+        this.setErrorCode('2')
+        return
+      }
+      if (!this.user.pass) {
+        this.setErrorCode('1')
+        return
+      } else if (this.user.pass.length < 8 || this.user.pass.length > 32) {
+        this.setErrorCode('3')
+        return
+      }
       const res = await AuthEmailApi.login(
         {
           username: this.user.username,
@@ -105,10 +128,11 @@ export default {
         this.$nuxt.$loading.finish()
       } else {
         // Login success? false?
-        this.$router.push('/')
+        this.$nuxt.$loading.finish()
+        await this.$router.push('/')
+        await sleep(300)
         this.$store.commit('updateUserInfo', res.data)
         this.submitDisabled = false
-        this.$nuxt.$loading.finish()
       }
     }
   }

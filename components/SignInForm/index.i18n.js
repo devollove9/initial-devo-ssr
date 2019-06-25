@@ -7,13 +7,11 @@ const IndexI18n = {
         password: 'Password'
       },
       error: {
-        enterUsername: 'Please enter email address',
-        enterValidUsername: 'Please enter a valid email',
-        usernameInvalid: 'Unknown error, please try again',
-        enterPass: 'Please enter a password',
-        enterAgain: 'Please enter password again',
-        enterPassAgain: 'Make sure it\'s at least 8 characters and at most 32 characters, please enter again!',
         code: {
+          '0': 'Please enter email address',
+          '1': 'Please enter a password',
+          '2': 'Please enter a valid email',
+          '3': 'Password must be 8 to 32 characters',
           '2002': 'Incorrect username or password',
           '2004': 'Unknown error, please try again'
         }
@@ -33,14 +31,14 @@ const IndexI18n = {
         password: '密码'
       },
       error: {
-        enterUsername: '请输入邮箱',
-        enterValidUsername: '请输入有效邮箱',
-        usernameInvalid: '未知错误，请再次尝试',
-        usernameExist: '该用户名已存在，请再次尝试',
-        enterPass: '请输入密码',
-        enterAgain: '请再次输入密码',
         enterPassAgain: '确保密码长度为8-32位之间，请再次输入密码',
         code: {
+          '0': '请填写邮箱',
+          '1': '请填写密码',
+          '2': '请输入有效邮箱',
+          '3': '密码长度应为8-32位之间',
+          '2000': '请填写邮箱',
+          '2001': '请填写密码',
           '2002': '用户名或者密码不正确',
           '2004': '未知错误，请稍后尝试'
         }

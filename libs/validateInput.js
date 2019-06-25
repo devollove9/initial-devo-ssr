@@ -8,12 +8,13 @@ const validateInput = (inputType, inputValue) => {
     case 'phone':
       re = /^[0-9]{10,}$/
       break
+    case 'password':
+      break
     case 'alphabetic':
       re = /^[a-zA-Z]+(\s[a-zA-Z]+)?$/
       break
   }
-  const valid = re.test(inputValue)
-  return valid
+  return re.test(inputValue)
 }
 
 export default validateInput

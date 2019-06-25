@@ -13,6 +13,7 @@
       :rules="rules"
       label-position="top"
       label-width="auto"
+      :disabled="submitDisabled === true"
     >
       <el-form-item class="form-label" :label="$t('signUpForm.label.username')" prop="username">
         <el-input v-model="ruleForm.username" type="email" />
@@ -50,7 +51,7 @@
         </p>
       </div>
       <el-form-item class="form-button">
-        <el-button class="form-button-submit" type="primary" @click.prevent="onSubmit">{{ $t('signUpForm.submit') }}</el-button>
+        <el-button :disabled="submitDisabled === true" class="form-button-submit" type="primary" @click.prevent="onSubmit">{{ $t('signUpForm.submit') }}</el-button>
         <div class="form-button-signin">
           <span>{{ $t('signUpForm.haveAccount') }}</span>
           <br>
@@ -91,28 +92,30 @@ export default {
   data () {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(this.$t('signUpForm.error.enterPass')))
+        return callback(new Error(this.$t('signUpForm.error.enterPass')))
       } else {
         if (this.ruleForm.pass.length < 8 || this.ruleForm.pass.length > 32) {
-          callback(new Error(this.$t('signUpForm.error.enterPassAgain')))
+          return callback(new Error(this.$t('signUpForm.error.enterPassAgain')))
         } else if (this.ruleForm.checkPass !== '') {
           this.$refs.ruleForm.validateField('checkPass')
         }
-        callback()
+        return callback()
       }
     }
     const validatePass2 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(this.$t('signUpForm.error.enterAgain')))
+        return callback(new Error(this.$t('signUpForm.error.enterAgain')))
       } else if (value.length < 8 || value.length > 32) {
-        callback(new Error(this.$t('signUpForm.error.enterPassAgain')))
+        return callback(new Error(this.$t('signUpForm.error.enterPassAgain')))
       } else if (value !== this.ruleForm.pass) {
-        callback(new Error(this.$t('signUpForm.error.passNoMatch')))
+        return callback(new Error(this.$t('signUpForm.error.passNoMatch')))
       } else {
-        callback()
+        return callback()
       }
     }
     return {
+      checkedEmail: '',
+      submitDisabled: false,
       pageJumpCountDown: 10,
       manuallySwitched: false,
       signUpSuccess: false,
@@ -166,6 +169,8 @@ export default {
       }
     },
     onSubmit () {
+      if (this.submitDisabled || this.running) return
+      this.submitDisabled = true
       this.$nuxt.$loading.start()
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
@@ -180,10 +185,11 @@ export default {
           } else {
             this.switchSuccess()
           }
+          this.submitDisabled = false
           this.$nuxt.$loading.finish()
         } else {
+          this.submitDisabled = false
           this.$nuxt.$loading.finish()
-          return false
         }
       })
     },
@@ -197,6 +203,14 @@ export default {
       }
     },
     checkEmail (rule, value, callback) {
+      if (this.checkedEmail !== '' && this.checkedEmail === value) return callback()
+      if (value === '') {
+        this.running = false
+        return callback(new Error(this.$t('signUpForm.error.enterUsername')))
+      } else if (!validateInput('email', value)) {
+        this.running = false
+        return callback(new Error(this.$t('signUpForm.error.enterValidUsername')))
+      }
       if (this.running === false) {
         this.running = true
         setTimeout(async () => {
@@ -208,6 +222,7 @@ export default {
             this.running = false
             return callback(new Error(this.$t('signUpForm.error.enterValidUsername')))
           }
+          const checkedEmail = this.ruleForm.username
           const res = await AuthEmailApi.checkInfo({ username: this.ruleForm.username })
           if (!res.data) {
             this.running = false
@@ -217,11 +232,14 @@ export default {
               type: 'warning',
               duration: 4000
             })
+            this.checkedEmail = ''
             return callback(new Error(this.$t('signUpForm.error.usernameInvalid')))
           } else if (res.data.exist === true) {
+            this.checkedEmail = ''
             this.running = false
             return callback(new Error(this.$t('signUpForm.error.usernameExist')))
           } else {
+            this.checkedEmail = checkedEmail
             this.running = false
             return callback()
           }
