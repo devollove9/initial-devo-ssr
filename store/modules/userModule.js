@@ -39,7 +39,7 @@ const newModule = {
       } catch (e) {
       }
       if (userToken) {
-        const res = await AuthUserApi.renew({ maxAge: 14400 }, userToken)
+        const res = await AuthUserApi.renew({ maxAge: 144000 }, userToken)
         if (!res.data) {
         } else {
           state.authenticated = true
@@ -59,6 +59,9 @@ const newModule = {
     },
     getUserInfo: function (state) {
       return state.userInfo
+    },
+    getUsername: function (state) {
+      return state.userInfo.username
     },
     isAuthenticated: (state) => {
       return state.authenticated

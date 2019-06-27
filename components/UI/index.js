@@ -4,6 +4,7 @@
 // import FormContainer from './FormContainer';
 
 import Card from './Card'
+import HyperLink from './HyperLink'
 import Icon from './Icon'
 import Input from './Input'
 import Logo from './Logo'
@@ -14,6 +15,7 @@ import IconDropDown from './IconDropDown'
 
 const UIComponents = {
   Card,
+  HyperLink,
   Icon,
   IconDropDown,
   Input,
@@ -25,6 +27,7 @@ const UIComponents = {
 
 export {
   Card,
+  HyperLink,
   Icon,
   IconDropDown,
   Input,

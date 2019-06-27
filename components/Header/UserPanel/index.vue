@@ -2,6 +2,8 @@
 import i18n from '~/libs/i18n'
 import localeMessage from './index.i18n.js'
 import { Popover } from '~/components/UI'
+import UserDropDown from '~/components/Header/UserDropDown'
+
 export default {
   components: {
     Popover
@@ -29,19 +31,22 @@ export default {
   render () {
     return (
       <div class="UserPanel">
-        <Popover>
-          {!!this.isAuthenticated && <div slot="triggerRef" class="user-avatar">
-            <a>
-              <div class="avatar-wrap" title={this.username}>
-                {this.username[0].toUpperCase()}
-              </div>
-            </a>
-          </div>}
-          <div slot="contentRef" class="userPanelDropDown">
-            Sign<br />
-            IN<br />
-            asd<br />
-            vwevw
+        <Popover
+          mode="hover"
+          offset="-95px,5px"
+          delayTimeOut={100}
+        >
+          <div class="userAvatarDropDown">
+            <UserDropDown />
+          </div>
+          <div slot="trigger" >
+            {!!this.isAuthenticated && <div class="user-avatar">
+              <a>
+                <div class="avatar-wrap" title={this.username}>
+                  {this.username[0].toUpperCase()}
+                </div>
+              </a>
+            </div>}
           </div>
         </Popover>
         {!this.isAuthenticated && this.finishedAuth && <div class="sign-in-sign-out">

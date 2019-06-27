@@ -12,19 +12,34 @@ const deleteEventListener = (element, controller, eventName) => {
 export default {
   name: 'Popover',
   props: {
-    className: String,
+    // className: String,
     tagName: {
       type: String,
       default: 'div'
     },
     preventDefault: Boolean,
     stopPropagation: Boolean,
+    appendToBody: {
+      type: Boolean,
+      default: false
+    },
     transitionName: String,
     enterActiveClass: String,
     leaveActiveClass: String,
-    reference: Object,
+    // reference: Object,
+    forcePop: {
+      type: Boolean,
+      default: false
+    },
     content: String,
-    disabled: Boolean,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    configs: {
+      type: Object,
+      default: () => { return {} }
+    },
     mode: {
       type: String,
       default: 'hover',
@@ -35,96 +50,125 @@ export default {
       default: 'bottom',
       validator: value => ['top', 'bottom', 'left', 'right'].includes(value)
     },
-    offSet: Number,
-    delayTime: {
+    offset: String,
+    delayTimeIn: {
       type: Number,
-      default: 0
+      default: 10
+    },
+    delayTimeOut: {
+      type: Number,
+      default: 10
     }
   },
   data () {
     return {
-      referenceElm: null,
       popperJS: null,
       pop: false,
-      currentPlacement: '',
-      options: {}
+      popupConfigs: {
+        placement: this.popLocation,
+        modifiers: {
+          offset: {
+            offset: this.offset
+          }
+        }
+      }
+    }
+  },
+  watch: {
+    pop (value) {
+      if (value) {
+        this.$emit('show', this)
+        if (this.popperJS) {
+          this.popperJS.enableEventListeners()
+        }
+        this.updatePopper()
+      } else {
+        if (this.popperJS) {
+          this.popperJS.disableEventListeners()
+        }
+        this.$emit('hide', this)
+      }
+    },
+    forcePop: {
+      handler (value) {
+        this[value ? 'popUp' : 'closeDown']()
+      },
+      immediate: true
+    },
+    disabled (value) {
+      if (value) {
+        this.pop = false
+      }
     }
   },
   created () {
+    this.popupConfigs = Object.assign(this.popupConfigs, this.configs)
   },
   mounted () {
-    console.log(this.$scopedSlots.triggerRef.call())
     if (this.reference) this.popupTriggerElm = this.reference
-    else if (this.triggerElm) this.popupTriggerElm = this.$scopedSlots.triggerRef.call()[0].elm
-    if (this.contentElm) this.popupContentElm = this.$scopedSlots.contentRef.call()[0].elm
-    console.log(this.popupTriggerElm)
-    if (this.mode === 'hover' && this.popupContentElm && this.popupTriggerElm) {
+    else if (this.$slots.trigger) this.popupTriggerElm = this.$slots.trigger[0].elm
+    this.popupContentElm = this.$slots.default[0].elm
+    if (this.mode === 'hover' && this.popupTriggerElm) {
       addEventListener(this.popupTriggerElm, this.onMouseOver, 'mouseover')
       addEventListener(this.popupTriggerElm, this.onMouseOver, 'focus')
       addEventListener(this.popupTriggerElm, this.onMouseOut, 'mouseout')
       addEventListener(this.popupTriggerElm, this.onMouseOut, 'blur')
-
-      addEventListener(this.popupContentElm, this.onMouseOver, 'mouseover')
-      addEventListener(this.popupContentElm, this.onMouseOver, 'focus')
-      addEventListener(this.popupContentElm, this.onMouseOut, 'mouseout')
-      addEventListener(this.popupContentElm, this.onMouseOut, 'blur')
+      if (this.popupContentElm) {
+        addEventListener(this.popupContentElm, this.onMouseOver, 'mouseover')
+        addEventListener(this.popupContentElm, this.onMouseOver, 'focus')
+        addEventListener(this.popupContentElm, this.onMouseOut, 'mouseout')
+        addEventListener(this.popupContentElm, this.onMouseOut, 'blur')
+      }
     }
     if (this.mode === 'click') {
-      addEventListener(this.popupTriggerElm, this.onMouseOut, 'mouseout')
-      addEventListener(document, this.onMouseOut, 'blur')
+      addEventListener(this.popupTriggerElm, this.showElm, 'click')
+      addEventListener(document, this.onClickElm, 'click')
     }
-    // this.referenceElm = this.reference || this.$slots.reference[0].elm
-    // this.popper = this.$slots.default[0].elm
-    /*
-    switch (this.trigger) {
-      case 'click':
-        on(this.referenceElm, 'click', this.doToggle);
-        on(document, 'click', this.handleDocumentClick);
-        break;
-      case 'hover':
-        on(this.referenceElm, 'mouseover', this.onMouseOver);
-        on(this.referenceElm, 'focus', this.onMouseOver);
-        on(this.popper, 'mouseover', this.onMouseOver);
-        on(this.popper, 'focus', this.onMouseOver);
-        on(this.referenceElm, 'mouseout', this.onMouseOut);
-        on(this.referenceElm, 'blur', this.onMouseOut);
-        on(this.popper, 'mouseout', this.onMouseOut);
-        on(this.popper, 'blur', this.onMouseOut);
-        break;
-    }
-    */
   },
   destroyed () {
-    this.destroyPopper()
+    this.destroyElm()
   },
   methods: {
+    updatePopper () {
+      this.popperJS ? this.popperJS.scheduleUpdate() : this.createPopper()
+    },
     createPopper () {
       this.$nextTick(() => {
         if (this.visibleArrow) {
-          this.appendArrow(this.popper)
+          this.appendArrow(this.contentElm)
         }
         if (this.appendToBody && !this.appendedToBody) {
           this.appendedToBody = true
-          document.body.appendChild(this.popper.parentElement)
+          document.body.appendChild(this.contentElm.parentElement)
         }
         if (this.popperJS && this.popperJS.destroy) {
           this.popperJS.destroy()
         }
-        this.popperOptions.onCreate = () => {
+        this.popupConfigs.onCreate = () => {
           this.$emit('created', this)
           this.$nextTick(this.updatePopper)
         }
-        this.popperJS = new Popper(this.referenceElm, this.popper, this.popperOptions)
+        this.popperJS = new Popper(this.popupTriggerElm, this.popupContentElm, this.popupConfigs)
       })
+    },
+    showElm (event) {
+      if (this.stopPropagation) {
+        event.stopPropagation()
+      }
+      if (this.preventDefault) {
+        event.preventDefault()
+      }
+      if (!this.forcePop) {
+        this.pop = !this.pop
+      }
     },
     popUp () {
       this.pop = true
     },
     closeDown () {
-
+      this.pop = false
     },
-    doDestroy () {
-      console.log('In doDestroy')
+    destroyPopper () {
       if (this.pop) {
         return
       }
@@ -133,53 +177,75 @@ export default {
         this.popperJS = null
       }
     },
-    destroyPopper () {
-      deleteEventListener(this.popupTriggerElm, 'mouseup', this.doClose)
-      deleteEventListener(this.referenceElm, 'mousedown', this.doShow)
-      deleteEventListener(this.referenceElm, 'focus', this.popUp)
-      deleteEventListener(this.referenceElm, 'blur', this.doClose)
-      deleteEventListener(this.referenceElm, 'mouseout', this.onMouseOut)
-      deleteEventListener(this.referenceElm, 'mouseover', this.onMouseOver)
-      deleteEventListener(document, 'click', this.handleDocumentClick)
+    destroyElm () {
+      if (this.popupContentElm) {
+        deleteEventListener(this.popupContentElm, this.showElm, 'click')
+        deleteEventListener(this.popupContentElm, this.closeDown, 'mouseup')
+        deleteEventListener(this.popupContentElm, this.popUp, 'mousedown')
+        deleteEventListener(this.popupContentElm, this.popUp, 'focus')
+        deleteEventListener(this.popupContentElm, this.closeDown, 'blur')
+        deleteEventListener(this.popupContentElm, this.onMouseOut, 'mouseout')
+        deleteEventListener(this.popupContentElm, this.onMouseOver, 'mouseover')
+      }
+      deleteEventListener(document, this.onClickElm, 'click')
       this.pop = false
-      this.doDestroy()
+      this.destroyPopper()
     },
     onMouseOver () {
-      console.log('asd')
       clearTimeout(this.runningEvent)
       this.runningEvent = setTimeout(() => {
         this.pop = true
-      }, this.delayTime)
+      }, this.delayTimeIn)
     },
     onMouseOut () {
       clearTimeout(this.runningEvent)
       this.runningEvent = setTimeout(() => {
         this.pop = false
-      }, this.delayTime)
+      }, this.delayTimeOut)
+    },
+    onClickElm (e) {
+      if (!this.$el || !this.popupContentElm ||
+        this.checkIfExist(this.$el, e.target) ||
+        this.checkIfExist(this.popupContentElm, e.target) ||
+        !this.popupContentElm || this.checkIfExist(this.popupTriggerElm, e.target)
+      ) {
+        return
+      }
+      this.$emit('documentClick', this)
+      if (this.forcePop) {
+        return
+      }
+      this.pop = false
+    },
+    checkIfExist (elm, otherElm) {
+      if (typeof elm.contains === 'function') {
+        return elm.contains(otherElm)
+      }
+      return false
     }
   },
   render () {
     const TargetTag = this.tagName
-    const slotContent = this.$scopedSlots.contentRef
-    const slotTrigger = this.$scopedSlots.triggerRef
-    if (slotTrigger) this.triggerElm = slotTrigger.call()
-    if (slotContent) this.contentElm = slotContent.call()
+    const slotContent = this.$slots.default
+    const slotTrigger = this.$slots.trigger
+    if (slotTrigger) this.triggerElm = slotTrigger[0]
+    if (slotContent) this.contentElm = slotContent[0]
     return (
       <TargetTag>
+        {this.triggerElm}
         <transition
           name={this.transitionName}
           enter-active-class={this.enterActiveClass}
           leave-active-class={this.leaveActiveClass}
-          onAfter-leave="doDestroy"
+          onAfter-leave={this.destroyPopper}
         >
           <span
-            ref={this.popper}
-            v-show={!this.disabled && this.pop}
+            ref={this.popupContentElm}
+            v-show={(!this.disabled && this.pop)}
           >
             {this.contentElm}{ this.content }
           </span>
         </transition>
-        {this.triggerElm}
       </TargetTag>
     )
   }

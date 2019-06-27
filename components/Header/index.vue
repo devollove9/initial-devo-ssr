@@ -32,6 +32,8 @@ export default {
   async beforeCreate () {
     await i18n(localeMessage, this.$store)
   },
+  mounted () {
+  },
   methods: {
     onSelectMenuIcon (e) {
       if (e === 'home') e = '/'
