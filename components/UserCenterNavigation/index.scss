@@ -1,0 +1,9 @@
+.UserCenterNavigation {
+  border-right: 1px solid $global-border-color;
+  padding: 30px;
+  // width: 220px;
+  .options {
+    font-size: $global-text-medium;
+    margin-top: 20px;
+  }
+}

@@ -6,7 +6,8 @@ const newModule = {
     return {
       userInfo: {},
       token: '',
-      authenticated: false
+      authenticated: false,
+      loaded: false
     }
   },
   mutations: {
@@ -41,7 +42,9 @@ const newModule = {
       if (userToken) {
         const res = await AuthUserApi.renew({ maxAge: 144000 }, userToken)
         if (!res.data) {
+          state.loaded = true
         } else {
+          state.loaded = true
           state.authenticated = true
           state.userInfo = res.data
         }

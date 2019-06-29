@@ -4,18 +4,18 @@ import localeMessage from './index.i18n.js'
 
 export default {
   layout: 'userCenter',
-  name: 'Account',
+  name: 'PaymentMethods',
   components: {
   },
   data () {
     return {
-      title: 'Account'
+      title: 'PaymentMethods'
     }
   },
   computed: {
   },
   async asyncData ({ app, params, redirect }) {
-    await console.log('In Account')
+    await console.log('In PaymentMethods')
   },
   beforeCreate () {
     i18n(localeMessage, this.$store)
@@ -26,14 +26,14 @@ export default {
     return {
       title: this.title,
       meta: [
-        { hid: 'description', name: 'description', content: 'Account' }
+        { hid: 'description', name: 'description', content: 'PaymentMethods' }
       ]
     }
   },
   render () {
     return (
-      <div class="Account" >
-          Account Information
+      <div class="PaymentMethods" >
+          PaymentMethods Information
       </div>
     )
   }

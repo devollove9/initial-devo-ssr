@@ -1,5 +1,6 @@
 .hyperLink {
   color: $global-text-color;
+  text-decoration: none;
   &:hover {
     color: $global-text-hover;
     text-decoration: underline;

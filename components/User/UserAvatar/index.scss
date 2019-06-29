@@ -1,0 +1,21 @@
+.UserAvatar {
+  height:80%;
+  padding: 11px 0 0 0;
+  display: table;
+  .avatar-wrap {
+    display: table-cell;
+    vertical-align: middle;
+    font-family: Charcoal, Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 50%;
+    // background-color: #f18989;
+    // border: 0 solid #6e6e6c;
+    background-color: $yellow-dark;
+    color: white;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    font-weight: 700;
+  }
+}

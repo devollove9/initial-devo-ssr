@@ -49,7 +49,7 @@ export default {
   },
   render () {
     return (
-      <div key="componentKey" class="Header">
+      <div class="Header">
         <header class="header">
           <div class="header-container">
             <Logo className="logoHeader" onClick={this.onClickLogo}/>
