@@ -57,7 +57,7 @@ export default {
               <el-menu router={true} default-active={this.activeMenu} class="el-menu-demo" mode="horizontal" onSelect={this.handleMenuSelect}>
                 <el-menu-item index="/">{ this.$t('header.menu.home') }</el-menu-item>
                 <el-menu-item index="/post">{ this.$t('header.menu.post') }</el-menu-item>
-                <el-submenu index="product">
+                <el-submenu index="/mywork" disabled>
                   <template slot="title">{ this.$t('header.menu.product') }</template>
                   <el-menu-item index="product-1">1</el-menu-item>
                   <el-menu-item index="product-2">2</el-menu-item>
