@@ -38,6 +38,7 @@ const newModule = {
       try {
         userToken = Cookie.get(cookieKey)
       } catch (e) {
+        state.loaded = true
       }
       if (userToken) {
         const res = await AuthUserApi.renew({ maxAge: 144000 }, userToken)
@@ -48,6 +49,8 @@ const newModule = {
           state.authenticated = true
           state.userInfo = res.data
         }
+      } else {
+        state.loaded = true
       }
     }
   },

@@ -118,14 +118,14 @@ export default {
       if (!window) return
       window.open(window.location.origin + '/a/' + articleId, '_blank')
     },
-    changePage (e, page) {
+    async changePage (e, page) {
       this.$nuxt.$loading.start()
-      if (window) window.scrollTo(0, 0)
       if (page === 'previous') this.query.page = this.query.page - 1
       else if (page === 'next') this.query.page = this.query.page + 1
       else this.query.page = page
-      this.performArticleSearch()
+      await this.performArticleSearch()
       this.$nuxt.$loading.finish()
+      if (window) window.scrollTo(0, 0)
     },
     handleSearchText () {
       if (this.searchText) this.query.text = this.searchText

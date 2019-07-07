@@ -50,3 +50,14 @@ input:focus {
     color: $blue-strong;
   }
 }
+
+.ptr {
+  cursor: pointer;
+}
+
+.hul {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

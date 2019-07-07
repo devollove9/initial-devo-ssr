@@ -40,7 +40,7 @@ export default {
       this.$router.push(e)
     },
     onClickLogo (e) {
-      this.$store.commit('signOutUser')
+      // this.$store.commit('signOutUser')
       this.$router.push('/')
     },
     handleMenuSelect (e) {

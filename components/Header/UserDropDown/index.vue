@@ -7,8 +7,7 @@ const list = [
   { text: 'header.userDropDown.yourOrder', dir: '/u/orders' },
   { text: 'header.userDropDown.yourFavorites', dir: '/u/favorites' },
   { text: 'header.userDropDown.rewardPoints', dir: '/u/rewardpoints' },
-  { text: 'header.userDropDown.coupons', dir: '/u/coupons' },
-  { text: 'header.userDropDown.signout', dir: '/signout' }
+  { text: 'header.userDropDown.coupons', dir: '/u/coupons' }
 ]
 
 export default {
@@ -39,6 +38,10 @@ export default {
   mounted () {
   },
   methods: {
+    async onSignOut () {
+      await this.$router.push('/')
+      this.$store.commit('signOutUser')
+    }
   },
   render () {
     return (
@@ -48,6 +51,9 @@ export default {
           <p class="username">{this.$store.getters.getUsername}</p>
         </div>
         {this.optionList}
+        <div class="options">
+          <p class="signout ptr hul" onClick={this.onSignOut}>{this.$t('header.userDropDown.signout')}</p>
+        </div>
       </div>
     )
   }
