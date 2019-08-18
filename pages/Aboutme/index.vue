@@ -44,15 +44,15 @@ export default {
           (few) IOS app: swift, learning..
         </div>
         <br />
+        My works:
         <div class="myWorks">
-          My works:
           <a href="https://517.today">517.today</a>
           <br/>
           <a href="https://www.impactlink.com/">impactLink.com</a>
           <br/>
           <a href="https://www.funchinaworld.com/">funchinaworld.com</a>
           <br/>
-          <a href="http://www.517today.com/">517today.com</a>
+          <a href="https://info.517.today/">info.517.today</a>
           <br />
           others...
         </div>
