@@ -33,6 +33,7 @@ export default {
   render () {
     return (
       <div class="Aboutme" >
+        My skills:
         <div class="briefIntro">
           (Most) Front-end: mobile, web, vue, react, etc..
           <br />
@@ -42,16 +43,18 @@ export default {
           <br />
           (few) IOS app: swift, learning..
         </div>
+        <br />
         <div class="myWorks">
-          517.today
+          My works:
+          <a href="https://517.today">517.today</a>
           <br/>
-          impactLink
+          <a href="https://www.impactlink.com/">impactLink.com</a>
           <br/>
-          funchinaworld
+          <a href="https://www.funchinaworld.com/">funchinaworld.com</a>
           <br/>
-          employee
+          <a href="http://www.517today.com/">517today.com</a>
           <br />
-          517today.com, other...
+          others...
         </div>
       </div>
     )
